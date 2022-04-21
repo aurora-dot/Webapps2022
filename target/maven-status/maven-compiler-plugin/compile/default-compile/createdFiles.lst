@@ -1,5 +1,4 @@
-com/ep396/Webapps2022/entity/Currency.class
 com/ep396/Webapps2022/ejb/UserService.class
-com/ep396/Webapps2022/entity/SystemUser.class
 com/ep396/Webapps2022/ejb/SystemUser.class
+com/ep396/Webapps2022/entity/SystemUser.class
 com/ep396/Webapps2022/entity/SystemUserGroup.class

@@ -3,6 +3,7 @@
 <html
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
   <h:head>
     <title>User Registration</title>
@@ -22,17 +23,31 @@
       &nbsp;
       <h:message style="color: red" for="username" />
       <br />
-      <h:outputLabel for="userPassword" value="*Password:" />
+      <h:outputLabel for="password" value="*Password:" />
       <h:inputSecret
-        id="userPassword"
-        value="#{registrationBean.userpassword}"
+        id="password"
+        value="#{registrationBean.password}"
         title="Enter password"
         label="password"
         required="true"
         requiredMessage="Mandatory Field"
-      />
+        >
+      </h:inputSecret>
       &nbsp;
-      <h:message style="color: red" for="userPassword" />
+      <h:message style="color: red" for="password" />
+      <br />
+      <h:outputLabel for="confPassword" value="*Confirm Password:" />
+      <h:inputSecret
+        id="confPassword"
+        value="#{registrationBean.confPassword}"
+        title="Enter password"
+        label="confPassword"
+        required="true"
+        requiredMessage="Mandatory Field"
+        >
+      </h:inputSecret>
+      &nbsp;
+      <h:message style="color: red" for="password" />
       <br />
       <h:outputLabel for="name" value="*First Name: " />
       <h:inputText
@@ -57,6 +72,24 @@
       />
       &nbsp;
       <h:message style="color: red" for="surname" />
+      <br />
+      <h:outputLabel for="currencyType" value="*Enter currency type:" /> 
+      <h:selectOneMenu
+        id="currencyType"
+        value="#{registrationBean.currencyType}"
+        required="true"
+        requiredMessage="Mandatory Field"
+        label="currencyType"
+      >
+        <f:selectItems
+          value="${registrationBean.allOrderCurrencies}"
+          var="state"
+          itemLabel="#{state.getCurrencySymbol(state)}"
+          itemValue="#{s}"
+        />
+      </h:selectOneMenu>
+       &nbsp;
+      <h:message style="color: red" for="currencyType" />
       <br />
       <h:commandButton
         id="register"

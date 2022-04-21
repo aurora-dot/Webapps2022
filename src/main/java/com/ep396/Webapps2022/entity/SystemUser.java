@@ -20,10 +20,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class SystemUser implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @NotNull
     String username;
 
     @NotNull
@@ -39,13 +35,13 @@ public class SystemUser implements Serializable {
     Float currencyCount;
 
     @NotNull
-    Currency currencyType;
+    CurrencyEnum currencyType;
 
     public SystemUser() {
     }
 
     public SystemUser(String username, String password, String name, String surname, Float currencyCount,
-            Currency currencyType) {
+            CurrencyEnum currencyType) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -102,11 +98,11 @@ public class SystemUser implements Serializable {
         this.currencyCount = currencyCount;
     }
 
-    public Currency getCurrencyType() {
+    public CurrencyEnum getCurrencyType() {
         return currencyType;
     }
 
-    public void setCurrencyType(Currency currencyType) {
+    public void setCurrencyType(CurrencyEnum currencyType) {
         this.currencyType = currencyType;
     }
 

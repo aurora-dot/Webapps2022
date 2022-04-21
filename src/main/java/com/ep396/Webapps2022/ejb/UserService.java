@@ -10,7 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.ep396.Webapps2022.entity.Currency;
+import com.ep396.Webapps2022.entity.CurrencyEnum;
 import com.ep396.Webapps2022.entity.SystemUserGroup;
 import com.ep396.Webapps2022.entity.SystemUser;
 
@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public void registerUser(String username, String userpassword, String name, String surname, Float currencyCount,
-            Currency currencyType) {
+            CurrencyEnum currencyType) {
         try {
             SystemUser sys_user;
             SystemUserGroup sys_user_group;
