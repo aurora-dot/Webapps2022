@@ -25,15 +25,24 @@
         <display-name>ForUsers</display-name>
         <web-resource-collection>
             <web-resource-name>user pages</web-resource-name>
-            <description/>
+            <description />
             <url-pattern>/faces/users/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <description/>
+            <description />
             <role-name>users</role-name>
         </auth-constraint>
         <user-data-constraint>
-            <description/>
+            <description />
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>All</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
@@ -46,7 +55,7 @@
         </form-login-config>
     </login-config>
     <security-role>
-        <description/>
+        <description />
         <role-name>users</role-name>
     </security-role>
 </web-app>

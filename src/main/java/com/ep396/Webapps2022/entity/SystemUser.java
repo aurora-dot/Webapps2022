@@ -41,7 +41,8 @@ public class SystemUser implements Serializable {
     @NotNull
     Currency currencyType;
 
-    public SystemUser() {}
+    public SystemUser() {
+    }
 
     public SystemUser(String username, String password, String name, String surname, Float currencyCount,
             Currency currencyType) {

@@ -16,7 +16,7 @@ import com.ep396.Webapps2022.entity.SystemUser;
 
 /**
  *
- * @author parisis
+ * @author blankie
  */
 @Stateless
 public class UserService {
@@ -27,7 +27,8 @@ public class UserService {
     public UserService() {
     }
 
-    public void registerUser(String username, String userpassword, String name, String surname, Float currencyCount, Currency currencyType) {
+    public void registerUser(String username, String userpassword, String name, String surname, Float currencyCount,
+            Currency currencyType) {
         try {
             SystemUser sys_user;
             SystemUserGroup sys_user_group;
@@ -40,13 +41,14 @@ public class UserService {
             String paswdToStoreInDB = bigInt.toString(16);
 
             // apart from the default constructor which is required by JPA
-            // you need to also implement a constructor that will make the following code succeed
+            // you need to also implement a constructor that will make the following code
+            // succeed
             sys_user = new SystemUser(username, paswdToStoreInDB, name, surname, currencyCount, currencyType);
             sys_user_group = new SystemUserGroup(username, "users");
 
             em.persist(sys_user);
             em.persist(sys_user_group);
-            
+
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
