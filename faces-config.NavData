@@ -2,8 +2,8 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="login.xhtml" x="846" y="32" zoom="true"/>
         <Node id="error.xhtml" x="1371" y="32" zoom="true"/>
+        <Node id="login.xhtml" x="846" y="32" zoom="true"/>
         <Node id="admins/user.xhtml" x="312" y="32" zoom="true"/>
         <Node id="users/user.xhtml" x="34" y="32" zoom="true"/>
         <Node id="index.xhtml" x="602" y="32" zoom="true"/>
