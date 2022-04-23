@@ -13,7 +13,11 @@ import javax.persistence.PersistenceContext;
 import com.ep396.Webapps2022.entity.CurrencyEnum;
 import com.ep396.Webapps2022.entity.SystemUserGroup;
 import com.ep396.Webapps2022.entity.SystemUser;
+import java.lang.reflect.UndeclaredThrowableException;
+import javax.annotation.PostConstruct;
+import javax.ejb.DependsOn;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 /**
@@ -21,6 +25,7 @@ import javax.persistence.TypedQuery;
  * @author blankie
  */
 @Stateless
+@DependsOn("StartupEJB")
 public class UserService {
 
     @PersistenceContext
@@ -29,8 +34,29 @@ public class UserService {
     public UserService() {
     }
 
+    public Boolean userExists(String username) {
+            TypedQuery<SystemUser> query = em.createNamedQuery("getUserByUsername", SystemUser.class);
+            query.setParameter("username", username);
+            try {
+                SystemUser result = query.getSingleResult();
+                return true;
+            } catch (UndeclaredThrowableException | PersistenceException e) {
+                return false;
+            }
+    }
+
     public String registerUser(String username, String password, String confPassword, String name, String surname, Float currencyCount,
             CurrencyEnum currencyType) {
+        return registerSystemUser(username, password, confPassword, name, surname, currencyCount, currencyType, "users");
+    }
+
+    public String registerAdmin(String username, String password, String confPassword, String name, String surname, Float currencyCount,
+            CurrencyEnum currencyType) {
+        return registerSystemUser(username, password, confPassword, name, surname, currencyCount, currencyType, "admins");
+    }
+
+    public String registerSystemUser(String username, String password, String confPassword, String name, String surname, Float currencyCount,
+            CurrencyEnum currencyType, String group) {
         try {
             SystemUser sys_user;
             SystemUserGroup sys_user_group;
@@ -45,20 +71,19 @@ public class UserService {
             byte[] digest = md.digest();
             BigInteger bigInt = new BigInteger(1, digest);
             String paswdToStoreInDB = bigInt.toString(16);
-
-            TypedQuery<SystemUser> query = em.createNamedQuery("getUserByUsername", SystemUser.class);
-            query.setParameter("username", username);
-            try {
-                SystemUser result = query.getSingleResult();
-                return "User already exists";
-
-            } catch (NoResultException e) {
+                
+            if (!userExists(username)) {
                 sys_user = new SystemUser(username, paswdToStoreInDB, name, surname, currencyCount, currencyType);
-                sys_user_group = new SystemUserGroup(username, "users");
+                sys_user_group = new SystemUserGroup(username, group);
                 em.persist(sys_user);
                 em.persist(sys_user_group);
+                em.flush();
+
                 return "index";
+            } else {
+                return "User already exists";
             }
+
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
             return "Backend error: Unsupported encoding or no such algorithm error";
