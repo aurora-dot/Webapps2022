@@ -8,6 +8,8 @@ import com.ep396.Webapps2022.ejb.UserService;
 import com.ep396.Webapps2022.entity.CurrencyEnum;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
@@ -34,16 +36,14 @@ public class RegistrationBean {
 
     }
 
-    //call the injected EJB
     public String register() {
-        if (!password.equals(confPassword)) {
-            System.out.print(password);
-            System.out.print(confPassword);      
-            return "passwordnotconfirmed";
+        String result = usrSrv.registerUser(username, password, confPassword, name, surname, Float.parseFloat("100"), currencyType);
+        if (result.equals("index")) {
+            return result;
         } else {
-            usrSrv.registerUser(username, password, name, surname, Float.parseFloat("100"), currencyType);
-            return "index";
-        }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result, ""));
+        }  
+        return null;
     }
 
     public CurrencyEnum[] getAllOrderCurrencies(){

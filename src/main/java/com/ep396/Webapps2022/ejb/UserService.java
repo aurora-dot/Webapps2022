@@ -13,6 +13,8 @@ import javax.persistence.PersistenceContext;
 import com.ep396.Webapps2022.entity.CurrencyEnum;
 import com.ep396.Webapps2022.entity.SystemUserGroup;
 import com.ep396.Webapps2022.entity.SystemUser;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,30 +29,39 @@ public class UserService {
     public UserService() {
     }
 
-    public void registerUser(String username, String userpassword, String name, String surname, Float currencyCount,
+    public String registerUser(String username, String password, String confPassword, String name, String surname, Float currencyCount,
             CurrencyEnum currencyType) {
         try {
             SystemUser sys_user;
             SystemUserGroup sys_user_group;
 
+            if (!password.equals(confPassword)) {
+                return "Passwords do not match";
+            }
+
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            String passwd = userpassword;
+            String passwd = password;
             md.update(passwd.getBytes("UTF-8"));
             byte[] digest = md.digest();
             BigInteger bigInt = new BigInteger(1, digest);
             String paswdToStoreInDB = bigInt.toString(16);
 
-            // apart from the default constructor which is required by JPA
-            // you need to also implement a constructor that will make the following code
-            // succeed
-            sys_user = new SystemUser(username, paswdToStoreInDB, name, surname, currencyCount, currencyType);
-            sys_user_group = new SystemUserGroup(username, "users");
+            TypedQuery<SystemUser> query = em.createNamedQuery("getUserByUsername", SystemUser.class);
+            query.setParameter("username", username);
+            try {
+                SystemUser result = query.getSingleResult();
+                return "User already exists";
 
-            em.persist(sys_user);
-            em.persist(sys_user_group);
-
+            } catch (NoResultException e) {
+                sys_user = new SystemUser(username, paswdToStoreInDB, name, surname, currencyCount, currencyType);
+                sys_user_group = new SystemUserGroup(username, "users");
+                em.persist(sys_user);
+                em.persist(sys_user_group);
+                return "index";
+            }
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+            return "Backend error: Unsupported encoding or no such algorithm error";
         }
     }
 }

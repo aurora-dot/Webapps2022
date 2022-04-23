@@ -6,10 +6,13 @@ package com.ep396.Webapps2022.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -17,9 +20,20 @@ import javax.validation.constraints.NotNull;
  * @author blankie
  */
 
+@NamedQueries({
+    @NamedQuery(name="getUserByUsername", query="SELECT u FROM SystemUser u WHERE u.username = :username"),
+    @NamedQuery(name="getUser", query="SELECT u FROM SystemUser u")
+
+})
+
 @Entity
 public class SystemUser implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(unique = true)
+    @NotNull
     String username;
 
     @NotNull
