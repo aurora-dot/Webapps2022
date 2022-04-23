@@ -36,13 +36,23 @@ public class RegistrationBean {
 
     }
 
-    public String register() {
+    public String registerUser() {
         String result = usrSrv.registerUser(username, password, confPassword, name, surname, Float.parseFloat("100"), currencyType);
         if (result.equals("index")) {
             return result + "?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result, ""));
         }  
+        return null;
+    }
+
+    public String registerAdmin() {
+        String result = usrSrv.registerAdmin(username, password, confPassword, name, surname, Float.parseFloat("100"), currencyType);
+        if (result.equals("index")) {
+            return result;
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result, ""));
+        }
         return null;
     }
 

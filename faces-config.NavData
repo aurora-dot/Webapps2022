@@ -2,12 +2,13 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="error.xhtml" x="1371" y="32" zoom="true"/>
-        <Node id="login.xhtml" x="846" y="32" zoom="true"/>
-        <Node id="admins/user.xhtml" x="312" y="32" zoom="true"/>
-        <Node id="users/user.xhtml" x="34" y="32" zoom="true"/>
-        <Node id="index.xhtml" x="602" y="32" zoom="true"/>
-        <Node id="registration.xhtml" x="1088" y="32" zoom="true"/>
+        <Node id="error.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="login.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="admins/user.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="users/user.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="index.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="admins/registeradmin.xhtml" x="93" y="298" zoom="true"/>
+        <Node id="registration.xhtml" x="157" y="377" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

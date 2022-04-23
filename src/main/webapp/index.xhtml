@@ -19,6 +19,7 @@
     <c:if test="#{loginBean.visitorAdmin}">
         <h3>Hello admin: <h:outputText value="${request.remoteUser}"/></h3>
         <div><h:link value="Go to a admin page" outcome="admin" /></div>
+        <div><h:link value="Register new admin" outcome="registrationAdmin" /></div>
     </c:if>
 
     <div><h:link value="Login" outcome="login" rendered="#{empty request.remoteUser}"/></div>
