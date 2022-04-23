@@ -15,6 +15,10 @@
             <from-outcome>admin</from-outcome>
             <to-view-id>/admins/user.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/users/user.xhtml</from-view-id>
