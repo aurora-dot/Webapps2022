@@ -39,7 +39,7 @@ public class RegistrationBean {
     public String register() {
         String result = usrSrv.registerUser(username, password, confPassword, name, surname, Float.parseFloat("100"), currencyType);
         if (result.equals("index")) {
-            return result;
+            return result + "?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result, ""));
         }  
