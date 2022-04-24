@@ -24,20 +24,21 @@
       </div>
     </c:if>
 
-    <div>
-      <h:link
-        value="Login"
-        outcome="login"
-        rendered="#{empty request.remoteUser}"
-      />
-    </div>
-    <div>
-      <h:link
-        value="Register here"
-        outcome="registration"
-        rendered="#{empty request.remoteUser}"
-      />
-    </div>
+    <c:if test="#{!(loginBean.visitorAdmin || loginBean.visitorUser)}">
+        <div>
+          <h:link
+            value="Login"
+            outcome="login"
+            rendered="#{empty request.remoteUser}"
+          />
+          | 
+          <h:link
+            value="Register"
+            outcome="registration"
+            rendered="#{empty request.remoteUser}"
+          />
+        </div>
+    </c:if>
 
     <c:if test="#{loginBean.visitorAdmin || loginBean.visitorUser}">
       <br />

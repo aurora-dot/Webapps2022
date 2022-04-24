@@ -13,7 +13,7 @@
     <h:form>
       Fill in the details and press the register button.
       <br />
-      <h:outputLabel for="username" value="*User name:" />
+      <h:outputLabel for="username" value="*User name: " />
       <h:inputText
         id="username"
         value="#{registrationBean.username}"
@@ -24,7 +24,7 @@
       &nbsp;
       <h:message style="color: red" for="username" />
       <br />
-      <h:outputLabel for="password" value="*Password:" />
+      <h:outputLabel for="password" value="*Password: " />
       <h:inputSecret
         id="password"
         value="#{registrationBean.password}"
@@ -37,7 +37,7 @@
       &nbsp;
       <h:message style="color: red" for="password" />
       <br />
-      <h:outputLabel for="confPassword" value="*Confirm Password:" />
+      <h:outputLabel for="confPassword" value="*Confirm Password: " />
       <h:inputSecret
         id="confPassword"
         value="#{registrationBean.confPassword}"
@@ -62,7 +62,7 @@
       &nbsp;
       <h:message style="color: red" for="name" />
       <br />
-      <h:outputLabel for="surname" value="*Last Name" />
+      <h:outputLabel for="surname" value="*Last Name: " />
       <h:inputText
         id="surname"
         value="#{registrationBean.surname}"
@@ -74,7 +74,7 @@
       &nbsp;
       <h:message style="color: red" for="surname" />
       <br />
-      <h:outputLabel for="currencyType" value="*Enter currency type:" />
+      <h:outputLabel for="currencyType" value="*Enter currency type: " />
       <h:selectOneMenu
         id="currencyType"
         value="#{registrationBean.currencyType}"

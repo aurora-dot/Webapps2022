@@ -21,9 +21,9 @@ import javax.validation.constraints.NotNull;
  */
 
 @NamedQueries({
-        @NamedQuery(name = "getUserByUsername", query = "SELECT u FROM SystemUser u WHERE u.username = :username"),
-        @NamedQuery(name = "getUser", query = "SELECT u FROM SystemUser u")
-
+    @NamedQuery(name = "getAllUsers", query = "SELECT u FROM SystemUser u"),
+    @NamedQuery(name = "getUserByUsername", query = "SELECT u FROM SystemUser u WHERE u.username = :username"),
+    @NamedQuery(name = "getUserIDFromUsername", query = "SELECT u.username FROM SystemUser u WHERE u.id = :id")
 })
 
 @Entity

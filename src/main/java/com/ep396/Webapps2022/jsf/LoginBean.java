@@ -25,7 +25,7 @@ public class LoginBean implements Serializable {
             request.logout();
             context.addMessage(null, new FacesMessage("User is logged out"));
         } catch (ServletException e) {
-            context.addMessage(null, new FacesMessage("Logout failed."));
+            context.addMessage(null, new FacesMessage("Logout failed"));
         }
     }
 

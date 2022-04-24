@@ -10,12 +10,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author blankie
  */
+
+@NamedQueries({
+    @NamedQuery(name = "getAllTransactions", query = "SELECT t FROM Transaction t"),
+
+    @NamedQuery(name = "getAllIncompleteTransactions", query = "SELECT t FROM Transaction t WHERE t.completed = false"),
+    @NamedQuery(name = "getAllCompletedTransactions", query = "SELECT t FROM Transaction t WHERE t.completed = true"),
+        
+    @NamedQuery(name = "getUserRequestsSending", query = "SELECT t FROM Transaction t WHERE t.fromUsername = :username AND t.completed = false"),
+    @NamedQuery(name = "getUserRequestsRecieving", query = "SELECT t FROM Transaction t WHERE t.toUsername = :username AND t.completed = true"),
+        
+    @NamedQuery(name = "getUserCompletedSendings", query = "SELECT t FROM Transaction t WHERE t.fromUsername = :username AND t.completed = false"),
+    @NamedQuery(name = "getUserCompletedRecievings", query = "SELECT t FROM Transaction t WHERE t.toUsername = :username AND t.completed = true"),
+})
 
 @Entity
 public class Transaction implements Serializable {
@@ -24,24 +39,16 @@ public class Transaction implements Serializable {
     private Long id;
 
     @NotNull
-    Long toUserID;
+    String toUsername;
 
     @NotNull
-    Long fromUserID;
+    String fromUsername;
 
     @NotNull
     Float currencyCountToTransfer;
 
     @NotNull
     boolean completed;
-
-    public Transaction(Long id, Long toUserID, Long fromUserID, Float currencyCountToTransfer, boolean completed) {
-        this.id = id;
-        this.toUserID = toUserID;
-        this.fromUserID = fromUserID;
-        this.currencyCountToTransfer = currencyCountToTransfer;
-        this.completed = completed;
-    }
 
     public Transaction() {
     }
@@ -54,20 +61,20 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public Long getToUserID() {
-        return toUserID;
+    public String getToUsername() {
+        return toUsername;
     }
 
-    public void setToUserID(Long toUserID) {
-        this.toUserID = toUserID;
+    public void setToUsername(String toUsername) {
+        this.toUsername = toUsername;
     }
 
-    public Long getFromUserID() {
-        return fromUserID;
+    public String getFromUsername() {
+        return fromUsername;
     }
 
-    public void setFromUserID(Long fromUserID) {
-        this.fromUserID = fromUserID;
+    public void setFromUsername(String fromUsername) {
+        this.fromUsername = fromUsername;
     }
 
     public Float getCurrencyCountToTransfer() {
@@ -86,12 +93,14 @@ public class Transaction implements Serializable {
         this.completed = completed;
     }
 
+
+
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 64 * hash + Objects.hashCode(this.id);
-        hash = 64 * hash + Objects.hashCode(this.toUserID);
-        hash = 64 * hash + Objects.hashCode(this.fromUserID);
+        hash = 64 * hash + Objects.hashCode(this.toUsername);
+        hash = 64 * hash + Objects.hashCode(this.fromUsername);
         hash = 64 * hash + Objects.hashCode(this.currencyCountToTransfer);
         hash = 64 * hash + Objects.hashCode(this.completed);
 
@@ -110,10 +119,10 @@ public class Transaction implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.toUserID, other.toUserID)) {
+        if (!Objects.equals(this.toUsername, other.toUsername)) {
             return false;
         }
-        if (!Objects.equals(this.fromUserID, other.fromUserID)) {
+        if (!Objects.equals(this.fromUsername, other.fromUsername)) {
             return false;
         }
 
