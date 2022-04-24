@@ -43,12 +43,32 @@ public class Transaction implements Serializable {
     String fromUsername;
 
     @NotNull
-    Float currencyCountToTransfer;
+    Float currencyCountTo;
+
+    @NotNull
+    Float currencyCountFrom;
+
+    @NotNull
+    CurrencyEnum currencyTypeTo;
+
+    @NotNull
+    CurrencyEnum currencyTypeFrom;
 
     @NotNull
     boolean completed;
 
+
     public Transaction() {
+    }
+
+    public Transaction(String toUsername, String fromUsername, Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom, boolean completed) {
+        this.toUsername = toUsername;
+        this.fromUsername = fromUsername;
+        this.currencyCountTo = currencyCountTo;
+        this.currencyCountFrom = currencyCountFrom;
+        this.currencyTypeTo = currencyTypeTo;
+        this.currencyTypeFrom = currencyTypeFrom;
+        this.completed = completed;
     }
 
     public Long getId() {
@@ -75,12 +95,36 @@ public class Transaction implements Serializable {
         this.fromUsername = fromUsername;
     }
 
-    public Float getCurrencyCountToTransfer() {
-        return currencyCountToTransfer;
+    public Float getCurrencyCountTo() {
+        return currencyCountTo;
     }
 
-    public void setCurrencyCountToTransfer(Float currencyCountToTransfer) {
-        this.currencyCountToTransfer = currencyCountToTransfer;
+    public void setCurrencyCountTo(Float currencyCountTo) {
+        this.currencyCountTo = currencyCountTo;
+    }
+
+    public Float getCurrencyCountFrom() {
+        return currencyCountFrom;
+    }
+
+    public void setCurrencyCountFrom(Float currencyCountFrom) {
+        this.currencyCountFrom = currencyCountFrom;
+    }
+
+    public CurrencyEnum getCurrencyTypeTo() {
+        return currencyTypeTo;
+    }
+
+    public void setCurrencyTypeTo(CurrencyEnum currencyTypeTo) {
+        this.currencyTypeTo = currencyTypeTo;
+    }
+
+    public CurrencyEnum getCurrencyTypeFrom() {
+        return currencyTypeFrom;
+    }
+
+    public void setCurrencyTypeFrom(CurrencyEnum currencyTypeFrom) {
+        this.currencyTypeFrom = currencyTypeFrom;
     }
 
     public boolean isCompleted() {
@@ -99,7 +143,10 @@ public class Transaction implements Serializable {
         hash = 64 * hash + Objects.hashCode(this.id);
         hash = 64 * hash + Objects.hashCode(this.toUsername);
         hash = 64 * hash + Objects.hashCode(this.fromUsername);
-        hash = 64 * hash + Objects.hashCode(this.currencyCountToTransfer);
+        hash = 64 * hash + Objects.hashCode(this.currencyCountTo);
+        hash = 64 * hash + Objects.hashCode(this.currencyCountFrom);
+        hash = 64 * hash + Objects.hashCode(this.currencyTypeTo);
+        hash = 64 * hash + Objects.hashCode(this.currencyTypeFrom);
         hash = 64 * hash + Objects.hashCode(this.completed);
 
         return hash;
@@ -124,7 +171,19 @@ public class Transaction implements Serializable {
             return false;
         }
 
-        if (!Objects.equals(this.currencyCountToTransfer, other.currencyCountToTransfer)) {
+        if (!Objects.equals(this.currencyCountTo, other.currencyCountTo)) {
+            return false;
+        }
+
+        if (!Objects.equals(this.currencyCountFrom, other.currencyCountFrom)) {
+            return false;
+        }
+
+        if (!Objects.equals(this.currencyTypeTo, other.currencyTypeTo)) {
+            return false;
+        }
+
+        if (!Objects.equals(this.currencyTypeFrom, other.currencyTypeFrom)) {
             return false;
         }
 
