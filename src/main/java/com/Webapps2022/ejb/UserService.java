@@ -1,4 +1,4 @@
-package com.ep396.Webapps2022.ejb;
+package com.webapps2022.ejb;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -10,9 +10,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.ep396.Webapps2022.entity.CurrencyEnum;
-import com.ep396.Webapps2022.entity.SystemUserGroup;
-import com.ep396.Webapps2022.entity.SystemUser;
+import com.webapps2022.entity.CurrencyEnum;
+import com.webapps2022.entity.SystemUserGroup;
+import com.webapps2022.entity.SystemUser;
 import java.lang.reflect.UndeclaredThrowableException;
 import javax.ejb.DependsOn;
 import javax.persistence.PersistenceException;

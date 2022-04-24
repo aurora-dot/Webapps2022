@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.ep396.Webapps2022.ejb;
+package com.webapps2022.ejb;
 
-import com.ep396.Webapps2022.entity.CurrencyEnum;
+import com.webapps2022.entity.CurrencyEnum;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
