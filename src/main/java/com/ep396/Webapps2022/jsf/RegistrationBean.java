@@ -22,7 +22,7 @@ import javax.inject.Named;
 public class RegistrationBean {
 
     @EJB
-    UserService usrSrv;
+    UserService userService;
 
     String username;
     String password;
@@ -36,7 +36,7 @@ public class RegistrationBean {
     }
 
     public String registerUser() {
-        String result = usrSrv.registerUser(username, password, confPassword, name, surname, (float) 100, currencyType);
+        String result = userService.registerUser(username, password, confPassword, name, surname, (float) 100, currencyType);
         if (result.equals("index")) {
             return result + "?faces-redirect=true";
         } else {
@@ -47,7 +47,7 @@ public class RegistrationBean {
     }
 
     public String registerAdmin() {
-        String result = usrSrv.registerAdmin(username, password, confPassword, name, surname, (float) 100,
+        String result = userService.registerAdmin(username, password, confPassword, name, surname, (float) 100,
                 currencyType);
         if (result.equals("index")) {
             return result;
@@ -70,12 +70,12 @@ public class RegistrationBean {
         this.confPassword = confPassword;
     }
 
-    public UserService getUsrSrv() {
-        return usrSrv;
+    public UserService getUserService() {
+        return userService;
     }
 
-    public void setUsrSrv(UserService usrSrv) {
-        this.usrSrv = usrSrv;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     public String getUsername() {
