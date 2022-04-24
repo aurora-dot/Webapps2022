@@ -32,8 +32,8 @@ public class TransactionService {
     }
 
     @RolesAllowed({"users"})
-    public synchronized Transaction makeTransaction(SystemUser to, SystemUser from, Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom, Boolean finalised) {
-        return new Transaction(to.getUsername(), from.getUsername(), currencyCountTo, currencyCountFrom, currencyTypeTo, currencyTypeFrom, finalised);
+    public synchronized Transaction makeTransaction(SystemUser toSystemUser, SystemUser fromSystemUser, Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom, Boolean finalised) {
+        return new Transaction(toSystemUser.getUsername(), fromSystemUser.getUsername(), currencyCountTo, currencyCountFrom, currencyTypeTo, currencyTypeFrom, finalised);
     }
 
     @RolesAllowed({"users"})
@@ -78,12 +78,12 @@ public class TransactionService {
     }
 
     @RolesAllowed({"users"})
-    public synchronized boolean givePayment(String from, String to, float currencyCount) {
+    public synchronized boolean givePayment(String toUsername, String fromUsername, float currencyCount) {
         try {
-            SystemUser fromUser = this.getUserByUsername(from);
-            SystemUser toUser = this.getUserByUsername(to);
+            SystemUser toUser = this.getUserByUsername(toUsername);
+            SystemUser fromUser = this.getUserByUsername(fromUsername);
 
-            if (fromUser == null || toUser == null) return false;
+            if (toUser == null || fromUser == null) return false;
             if (fromUser.getCurrencyCount() < currencyCount) return false;
 
             float fromCurrency = fromUser.getCurrencyType().convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
@@ -109,12 +109,12 @@ public class TransactionService {
     }
 
     @RolesAllowed({"users"})
-    public synchronized boolean requestPayment(String from, String to, float currencyCount) {
+    public synchronized boolean requestPayment(String toUsername, String fromUsername, float currencyCount) {
         try {
-            SystemUser fromUser = this.getUserByUsername(from);
-            SystemUser toUser = this.getUserByUsername(to);
+            SystemUser toUser = this.getUserByUsername(toUsername);
+            SystemUser fromUser = this.getUserByUsername(fromUsername);
 
-            if (fromUser == null || toUser == null) return false;
+            if (toUser == null || fromUser == null) return false;
 
             float fromCurrency = fromUser.getCurrencyType().convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
             float currencyCountTo = currencyCount * fromCurrency;
