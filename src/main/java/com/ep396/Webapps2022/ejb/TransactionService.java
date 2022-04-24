@@ -41,8 +41,63 @@ public class TransactionService {
         }
     }
 
+    @RolesAllowed({"users"})
+    public synchronized List<Transaction> getUserAllTransactions(String username) {
+        TypedQuery<Transaction> query = em.createNamedQuery("getUserAllTransactions", Transaction.class);
+        query.setParameter("username", username);
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @RolesAllowed({"users"})
+    public synchronized List<Transaction> getUserRequestsSending(String username) {
+        TypedQuery<Transaction> query = em.createNamedQuery("getUserRequestsSending", Transaction.class);
+        query.setParameter("username", username);
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @RolesAllowed({"users"})
+    public synchronized List<Transaction> getUserRequestsRecieving(String username) {
+        TypedQuery<Transaction> query = em.createNamedQuery("getUserRequestsRecieving", Transaction.class);
+        query.setParameter("username", username);
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @RolesAllowed({"users"})
+    public synchronized List<Transaction> getUserCompletedSendings(String username) {
+        TypedQuery<Transaction> query = em.createNamedQuery("getUserCompletedSendings", Transaction.class);
+        query.setParameter("username", username);
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @RolesAllowed({"users"})
+    public synchronized List<Transaction> getUserCompletedRecievings(String username) {
+        TypedQuery<Transaction> query = em.createNamedQuery("getUserCompletedRecievings", Transaction.class);
+        query.setParameter("username", username);
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
     @RolesAllowed({"admins"})
-    public synchronized List<SystemUser> getAllUsers(String name) {
+    public synchronized List<SystemUser> getAllUsers() {
         TypedQuery<SystemUser> query = em.createNamedQuery("getAllUsers", SystemUser.class);
         try {
             return query.getResultList();
@@ -52,7 +107,7 @@ public class TransactionService {
     }
 
     @RolesAllowed({"admins"})
-    public synchronized List<Transaction> getAllTransactions(String name) {
+    public synchronized List<Transaction> getAllTransactions() {
         TypedQuery<Transaction> query = em.createNamedQuery("getAllTransactions", Transaction.class);
         try {
             return query.getResultList();

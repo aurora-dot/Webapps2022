@@ -21,14 +21,12 @@ import javax.validation.constraints.NotNull;
 
 @NamedQueries({
     @NamedQuery(name = "getAllTransactions", query = "SELECT t FROM Transaction t"),
+    @NamedQuery(name = "getUserAllTransactions", query = "SELECT t FROM Transaction t WHERE t.fromUsername = :username OR t.toUsername = :username"),
 
-    @NamedQuery(name = "getAllIncompleteTransactions", query = "SELECT t FROM Transaction t WHERE t.completed = false"),
-    @NamedQuery(name = "getAllCompletedTransactions", query = "SELECT t FROM Transaction t WHERE t.completed = true"),
-        
     @NamedQuery(name = "getUserRequestsSending", query = "SELECT t FROM Transaction t WHERE t.fromUsername = :username AND t.completed = false"),
-    @NamedQuery(name = "getUserRequestsRecieving", query = "SELECT t FROM Transaction t WHERE t.toUsername = :username AND t.completed = true"),
+    @NamedQuery(name = "getUserRequestsRecieving", query = "SELECT t FROM Transaction t WHERE t.toUsername = :username AND t.completed = false"),
         
-    @NamedQuery(name = "getUserCompletedSendings", query = "SELECT t FROM Transaction t WHERE t.fromUsername = :username AND t.completed = false"),
+    @NamedQuery(name = "getUserCompletedSendings", query = "SELECT t FROM Transaction t WHERE t.fromUsername = :username AND t.completed = true"),
     @NamedQuery(name = "getUserCompletedRecievings", query = "SELECT t FROM Transaction t WHERE t.toUsername = :username AND t.completed = true"),
 })
 
