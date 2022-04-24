@@ -48,17 +48,7 @@ public class TransactionBean {
         this.currencyCount = currencyCount;
     }
 
-    public Float getCurrentUserCurrencyCount(String username) {
-        try {
-            return transactionService.getUserByUsername(username).getCurrencyCount();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return null;
-    }
-
-    public String getCurrentUserCurrencyCountAsString(String username) {
+    public String getCurrentUserCurrencyCount(String username) {
         try {
             SystemUser user = transactionService.getUserByUsername(username);
             return CurrencyEnum.getCurrencySymbol(user.getCurrencyType()) + user.getCurrencyCount();

@@ -70,14 +70,6 @@ public class RegistrationBean {
         this.confPassword = confPassword;
     }
 
-    public UserService getUserService() {
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
     public String getUsername() {
         return username;
     }

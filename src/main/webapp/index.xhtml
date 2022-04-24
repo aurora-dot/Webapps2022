@@ -13,7 +13,7 @@
 
     <c:if test="#{loginBean.visitorUser}">
       <h3>Hello user: <h:outputText value="${request.remoteUser}" /></h3>
-      <h4>Your account has <h:outputText value="${transactionBean.getCurrentUserCurrencyCountAsString(request.remoteUser)}"/></h4>
+      <h4>Your account has <h:outputText value="${transactionBean.getCurrentUserCurrencyCount(request.remoteUser)}"/></h4>
       <div><h:link value="Go to a user page" outcome="user" /></div>
     </c:if>
 
