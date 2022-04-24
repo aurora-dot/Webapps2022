@@ -63,7 +63,7 @@ public enum CurrencyEnum {
         return null;
     }
 
-    public Float convertCurrency(CurrencyEnum fromCurrency, CurrencyEnum toCurrency) {
+    public static Float convertCurrency(CurrencyEnum fromCurrency, CurrencyEnum toCurrency) {
         if (fromCurrency != null && toCurrency != null) {
             switch (fromCurrency) {
                 case GBP:

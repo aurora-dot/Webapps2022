@@ -2,13 +2,19 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="error.xhtml" x="400" y="150" zoom="true"/>
-        <Node id="login.xhtml" x="400" y="300" zoom="true"/>
-        <Node id="admins/user.xhtml" x="150" y="150" zoom="true"/>
-        <Node id="users/user.xhtml" x="900" y="150" zoom="true"/>
-        <Node id="index.xhtml" x="650" y="150" zoom="true"/>
-        <Node id="admins/register.xhtml" x="93" y="298" zoom="true"/>
-        <Node id="registration.xhtml" x="157" y="377" zoom="true"/>
+        <Node id="error.xhtml" x="3577" y="32" zoom="true"/>
+        <Node id="admins/accounts.xhtml" x="593" y="32" zoom="true"/>
+        <Node id="admins/user.xhtml" x="911" y="32" zoom="true"/>
+        <Node id="index.xhtml" x="3345" y="32" zoom="true"/>
+        <Node id="admins/registration.xhtml" x="1782" y="32" zoom="true"/>
+        <Node id="registration.xhtml" x="1201" y="32" zoom="true"/>
+        <Node id="login.xhtml" x="2423" y="32" zoom="true"/>
+        <Node id="users/user.xhtml" x="34" y="32" zoom="true"/>
+        <Node id="users/send.xhtml" x="312" y="32" zoom="true"/>
+        <Node id="admins/transactions.xhtml" x="2665" y="32" zoom="true"/>
+        <Node id="users/transactions.xhtml" x="3005" y="32" zoom="true"/>
+        <Node id="users/request.xhtml" x="1484" y="32" zoom="true"/>
+        <Node id="users/requests.xhtml" x="2118" y="32" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

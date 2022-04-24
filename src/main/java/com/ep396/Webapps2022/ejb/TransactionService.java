@@ -86,7 +86,7 @@ public class TransactionService {
             if (toUser == null || fromUser == null) return false;
             if (fromUser.getCurrencyCount() < currencyCount) return false;
 
-            float fromCurrency = fromUser.getCurrencyType().convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
+            float fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
 
             float currencyCountTo = currencyCount * fromCurrency;
             float currencyCountFrom = currencyCount;
@@ -116,7 +116,7 @@ public class TransactionService {
 
             if (toUser == null || fromUser == null) return false;
 
-            float fromCurrency = fromUser.getCurrencyType().convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
+            float fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
             float currencyCountTo = currencyCount * fromCurrency;
             float currencyCountFrom = currencyCount;
 

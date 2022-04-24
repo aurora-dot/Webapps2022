@@ -21,7 +21,35 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>registrationAdmin</from-outcome>
-            <to-view-id>/admins/register.xhtml</to-view-id>
+            <to-view-id>/admins/registration.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>registration</from-outcome>
+            <to-view-id>/registration.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>transactions</from-outcome>
+            <to-view-id>/users/transactions.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>request</from-outcome>
+            <to-view-id>/users/request.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>transactionsAdmin</from-outcome>
+            <to-view-id>/admins/transactions.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>send</from-outcome>
+            <to-view-id>/users/send.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>requests</from-outcome>
+            <to-view-id>/users/requests.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>accounts</from-outcome>
+            <to-view-id>/admins/accounts.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
@@ -53,11 +81,53 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/admins/register.xhtml</from-view-id>
+        <from-view-id>/admins/registration.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
             <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/admins/transactions.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/users/transactions.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/users/request.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/users/send.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/users/requests.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/admins/accounts.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

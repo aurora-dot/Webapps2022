@@ -5,6 +5,8 @@
 package com.ep396.Webapps2022.jsf;
 
 import com.ep396.Webapps2022.ejb.TransactionService;
+import com.ep396.Webapps2022.entity.CurrencyEnum;
+import com.ep396.Webapps2022.entity.SystemUser;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -45,4 +47,27 @@ public class TransactionBean {
     public void setCurrencyCount(Float currencyCount) {
         this.currencyCount = currencyCount;
     }
+
+    public Float getCurrentUserCurrencyCount(String username) {
+        try {
+            return transactionService.getUserByUsername(username).getCurrencyCount();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return null;
+    }
+
+    public String getCurrentUserCurrencyCountAsString(String username) {
+        try {
+            SystemUser user = transactionService.getUserByUsername(username);
+            return CurrencyEnum.getCurrencySymbol(user.getCurrencyType()) + user.getCurrencyCount();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return null;  
+    }
+
+
 }
