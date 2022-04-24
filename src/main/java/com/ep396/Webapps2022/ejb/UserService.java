@@ -33,34 +33,39 @@ public class UserService {
     }
 
     public Boolean userExists(String username) {
-            TypedQuery<SystemUser> query = em.createNamedQuery("getUserByUsername", SystemUser.class);
-            query.setParameter("username", username);
-            try {
-                SystemUser result = query.getSingleResult();
-                return true;
-            } catch (UndeclaredThrowableException | PersistenceException e) {
-                return false;
-            }
+        TypedQuery<SystemUser> query = em.createNamedQuery("getUserByUsername", SystemUser.class);
+        query.setParameter("username", username);
+        try {
+            SystemUser result = query.getSingleResult();
+            return true;
+        } catch (UndeclaredThrowableException | PersistenceException e) {
+            return false;
+        }
     }
 
-    public String registerUser(String username, String password, String confPassword, String name, String surname, Float currencyCount,
+    public String registerUser(String username, String password, String confPassword, String name, String surname,
+            Float currencyCount,
             CurrencyEnum currencyType) {
-        return registerSystemUser(username, password, confPassword, name, surname, currencyCount, currencyType, "users");
+        return registerSystemUser(username, password, confPassword, name, surname, currencyCount, currencyType,
+                "users");
     }
 
-    public String registerAdmin(String username, String password, String confPassword, String name, String surname, Float currencyCount,
+    public String registerAdmin(String username, String password, String confPassword, String name, String surname,
+            Float currencyCount,
             CurrencyEnum currencyType) {
-        return registerSystemUser(username, password, confPassword, name, surname, currencyCount, currencyType, "admins");
+        return registerSystemUser(username, password, confPassword, name, surname, currencyCount, currencyType,
+                "admins");
     }
 
-    public String registerSystemUser(String username, String password, String confPassword, String name, String surname, Float currencyCount,
+    public String registerSystemUser(String username, String password, String confPassword, String name, String surname,
+            Float currencyCount,
             CurrencyEnum currencyType, String group) {
         try {
             SystemUser sys_user;
             SystemUserGroup sys_user_group;
 
             if (!password.equals(confPassword)) {
-                return "Passwords do not match";
+                return "User error: Passwords do not match";
             }
 
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -69,7 +74,7 @@ public class UserService {
             byte[] digest = md.digest();
             BigInteger bigInt = new BigInteger(1, digest);
             String paswdToStoreInDB = bigInt.toString(16);
-                
+
             if (!userExists(username)) {
                 sys_user = new SystemUser(username, paswdToStoreInDB, name, surname, currencyCount, currencyType);
                 sys_user_group = new SystemUserGroup(username, group);
@@ -79,7 +84,7 @@ public class UserService {
 
                 return "index";
             } else {
-                return "User already exists";
+                return "User error: User already exists";
             }
 
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {

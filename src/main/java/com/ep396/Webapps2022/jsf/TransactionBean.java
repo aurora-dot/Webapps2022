@@ -9,5 +9,5 @@ package com.ep396.Webapps2022.jsf;
  * @author blankie
  */
 public class TransactionBean {
-    
+
 }

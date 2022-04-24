@@ -29,6 +29,7 @@ public class StartupEJB {
         }
     }
 
-  @PreDestroy
-  public void destroy() {}
+    @PreDestroy
+    public void destroy() {
+    }
 }

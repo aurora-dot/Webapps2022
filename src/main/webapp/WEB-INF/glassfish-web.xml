@@ -19,7 +19,7 @@
   <ejb-ref>
     <ejb-ref-name>StartupEJB</ejb-ref-name>
   </ejb-ref>
-  <class-loader delegate="true"/>
+  <class-loader delegate="true" />
   <jsp-config>
     <property name="keepgenerated" value="true">
       <description>Keep a copy of the generated servlet class' java code.</description>

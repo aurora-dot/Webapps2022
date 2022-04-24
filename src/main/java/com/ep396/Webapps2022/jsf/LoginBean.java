@@ -20,7 +20,8 @@ public class LoginBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         try {
-            //this method will disassociate the principal from the session (effectively logging them out)
+            // this method will disassociate the principal from the session (effectively
+            // logging them out)
             request.logout();
             context.addMessage(null, new FacesMessage("User is logged out"));
         } catch (ServletException e) {
@@ -29,12 +30,10 @@ public class LoginBean implements Serializable {
     }
 
     public boolean isVisitorUser() {
-        return FacesContext.getCurrentInstance().getExternalContext().
-           isUserInRole("users");
+        return FacesContext.getCurrentInstance().getExternalContext().isUserInRole("users");
     }
 
     public boolean isVisitorAdmin() {
-        return FacesContext.getCurrentInstance().getExternalContext().
-           isUserInRole("admins");
+        return FacesContext.getCurrentInstance().getExternalContext().isUserInRole("admins");
     }
 }

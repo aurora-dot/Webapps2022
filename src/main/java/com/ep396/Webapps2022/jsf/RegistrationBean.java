@@ -23,14 +23,13 @@ public class RegistrationBean {
 
     @EJB
     UserService usrSrv;
-    
+
     String username;
     String password;
     String name;
     String surname;
     CurrencyEnum currencyType;
     String confPassword;
-
 
     public RegistrationBean() {
 
@@ -41,30 +40,34 @@ public class RegistrationBean {
         if (result.equals("index")) {
             return result + "?faces-redirect=true";
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result, ""));
-        }  
-        return null;
-    }
-
-    public String registerAdmin() {
-        String result = usrSrv.registerAdmin(username, password, confPassword, name, surname, (float) 100, currencyType);
-        if (result.equals("index")) {
-            return result;
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result, ""));
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, result, ""));
         }
         return null;
     }
 
-    public CurrencyEnum[] getAllOrderCurrencies(){
+    public String registerAdmin() {
+        String result = usrSrv.registerAdmin(username, password, confPassword, name, surname, (float) 100,
+                currencyType);
+        if (result.equals("index")) {
+            return result;
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, result, ""));
+        }
+        return null;
+    }
+
+    public CurrencyEnum[] getAllOrderCurrencies() {
         return CurrencyEnum.values();
     }
 
     public String getConfPassword() {
-      return confPassword;
+        return confPassword;
     }
+
     public void setConfPassword(String confPassword) {
-      this.confPassword = confPassword;
+        this.confPassword = confPassword;
     }
 
     public UserService getUsrSrv() {
