@@ -37,7 +37,7 @@ public class RegistrationBean {
     }
 
     public String registerUser() {
-        String result = usrSrv.registerUser(username, password, confPassword, name, surname, Float.parseFloat("100"), currencyType);
+        String result = usrSrv.registerUser(username, password, confPassword, name, surname, (float) 100, currencyType);
         if (result.equals("index")) {
             return result + "?faces-redirect=true";
         } else {
@@ -47,7 +47,7 @@ public class RegistrationBean {
     }
 
     public String registerAdmin() {
-        String result = usrSrv.registerAdmin(username, password, confPassword, name, surname, Float.parseFloat("100"), currencyType);
+        String result = usrSrv.registerAdmin(username, password, confPassword, name, surname, (float) 100, currencyType);
         if (result.equals("index")) {
             return result;
         } else {

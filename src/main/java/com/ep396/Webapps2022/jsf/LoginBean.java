@@ -7,12 +7,10 @@ package com.ep396.Webapps2022.jsf;
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import org.eclipse.persistence.sessions.Login;
 
 @Named
 @RequestScoped

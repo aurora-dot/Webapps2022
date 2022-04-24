@@ -25,7 +25,7 @@ public class StartupEJB {
     @PostConstruct
     private void startup() {
         if (!usrSrv.userExists("admin1")) {
-            usrSrv.registerAdmin("admin1", "admin1", "admin1", "admin", "admin", Float.parseFloat("100"), CurrencyEnum.GBP);
+            usrSrv.registerAdmin("admin1", "admin1", "admin1", "admin", "admin", (float) 100, CurrencyEnum.GBP);
         }
     }
 

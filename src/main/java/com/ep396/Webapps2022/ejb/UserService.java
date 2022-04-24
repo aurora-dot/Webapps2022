@@ -14,9 +14,7 @@ import com.ep396.Webapps2022.entity.CurrencyEnum;
 import com.ep396.Webapps2022.entity.SystemUserGroup;
 import com.ep396.Webapps2022.entity.SystemUser;
 import java.lang.reflect.UndeclaredThrowableException;
-import javax.annotation.PostConstruct;
 import javax.ejb.DependsOn;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
