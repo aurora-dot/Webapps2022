@@ -24,7 +24,7 @@ import javax.persistence.TypedQuery;
  * @author blankie
  */
 @Stateless
-@DependsOn("StartupEJB")
+@DependsOn("StartupService")
 public class UserService {
 
     @PersistenceContext

@@ -19,6 +19,11 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author blankie
  */
+
+
+// When logging in using the login.xhtml file directly, it directs to the base context path
+// This is being overwritten by the REST application, to fix this I had to create a redirect
+// To the index page again, it renders that page typically if no REST application was there
 @Singleton
 @Path("/")
 public class RSRedirect {

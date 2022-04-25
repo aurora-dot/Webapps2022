@@ -18,7 +18,7 @@ import javax.ejb.Startup;
 
 @Startup
 @Singleton
-public class StartupEJB {
+public class StartupService {
     @EJB
     UserService usrSrv;
 
