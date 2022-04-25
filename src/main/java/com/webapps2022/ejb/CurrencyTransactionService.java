@@ -6,7 +6,7 @@ package com.webapps2022.ejb;
 
 import com.webapps2022.entity.CurrencyEnum;
 import com.webapps2022.entity.SystemUser;
-import com.webapps2022.entity.Transaction;
+import com.webapps2022.entity.CurrencyTransaction;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -24,26 +24,26 @@ import javax.persistence.TypedQuery;
 
 @Stateless
 @TransactionAttribute(REQUIRED)
-public class TransactionService {
+public class CurrencyTransactionService {
     @PersistenceContext
     EntityManager em;
 
-    public TransactionService() {
+    public CurrencyTransactionService() {
     }
 
     @RolesAllowed({ "users" })
-    public synchronized Transaction createTransaction(SystemUser toSystemUser, SystemUser fromSystemUser,
+    public synchronized CurrencyTransaction createTransaction(SystemUser toSystemUser, SystemUser fromSystemUser,
             Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom,
             Boolean finalised) {
-        return new Transaction(toSystemUser.getUsername(), fromSystemUser.getUsername(), currencyCountTo,
+        return new CurrencyTransaction(toSystemUser, fromSystemUser, currencyCountTo,
                 currencyCountFrom, currencyTypeTo, currencyTypeFrom, finalised);
     }
 
     @RolesAllowed({ "users" })
     public synchronized boolean acceptRequest(Long id) {
-        Transaction pendingTransaction = em.find(Transaction.class, id);
-        SystemUser fromUser = getUserByUsername(pendingTransaction.getFromUsername());
-        SystemUser toUser = getUserByUsername(pendingTransaction.getToUsername());
+        CurrencyTransaction pendingTransaction = em.find(CurrencyTransaction.class, id);
+        SystemUser fromUser = pendingTransaction.getFromSystemUser();
+        SystemUser toUser = pendingTransaction.getToSystemUser();
 
         float currencyCount = pendingTransaction.getCurrencyCountFrom();
         if (fromUser.getCurrencyCount() < currencyCount)
@@ -52,7 +52,7 @@ public class TransactionService {
         toUser.setCurrencyCount(toUser.getCurrencyCount() + pendingTransaction.getCurrencyCountTo());
         fromUser.setCurrencyCount(fromUser.getCurrencyCount() - pendingTransaction.getCurrencyCountFrom());
 
-        em.find(Transaction.class, pendingTransaction.getId()).setCompleted(true);
+        em.find(CurrencyTransaction.class, pendingTransaction.getId()).setCompleted(true);
         em.persist(fromUser);
         em.persist(toUser);
         em.flush();
@@ -63,11 +63,10 @@ public class TransactionService {
 
     @RolesAllowed({ "users" })
     public synchronized boolean denyRequest(Long id) {
-        em.remove(em.find(Transaction.class, id));
+        em.remove(em.find(CurrencyTransaction.class, id));
         em.flush();
 
         return true;
-
     }
 
     @RolesAllowed({ "users" })
@@ -130,9 +129,9 @@ public class TransactionService {
     }
 
     @RolesAllowed({ "users" })
-    public synchronized List<Transaction> getUserAllTransactions(String username) {
-        TypedQuery<Transaction> query = em.createNamedQuery("getUserAllTransactions", Transaction.class);
-        query.setParameter("username", username);
+    public synchronized List<CurrencyTransaction> getUserAllTransactions(String username) {
+        TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserAllTransactions", CurrencyTransaction.class);
+        query.setParameter("username", getUserByUsername(username));
 
         try {
             return query.getResultList();
@@ -142,9 +141,9 @@ public class TransactionService {
     }
 
     @RolesAllowed({ "users" })
-    public synchronized List<Transaction> getUserRequestsSending(String username) {
-        TypedQuery<Transaction> query = em.createNamedQuery("getUserRequestsSending", Transaction.class);
-        query.setParameter("username", username);
+    public synchronized List<CurrencyTransaction> getUserRequestsSending(String username) {
+        TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserRequestsSending", CurrencyTransaction.class);
+        query.setParameter("username", getUserByUsername(username));
 
         try {
             return query.getResultList();
@@ -154,9 +153,9 @@ public class TransactionService {
     }
 
     @RolesAllowed({ "users" })
-    public synchronized List<Transaction> getUserRequestsRecieving(String username) {
-        TypedQuery<Transaction> query = em.createNamedQuery("getUserRequestsRecieving", Transaction.class);
-        query.setParameter("username", username);
+    public synchronized List<CurrencyTransaction> getUserRequestsRecieving(String username) {
+        TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserRequestsRecieving", CurrencyTransaction.class);
+        query.setParameter("username", getUserByUsername(username));
 
         try {
             return query.getResultList();
@@ -166,9 +165,9 @@ public class TransactionService {
     }
 
     @RolesAllowed({ "users" })
-    public synchronized List<Transaction> getUserCompletedSendings(String username) {
-        TypedQuery<Transaction> query = em.createNamedQuery("getUserCompletedSendings", Transaction.class);
-        query.setParameter("username", username);
+    public synchronized List<CurrencyTransaction> getUserCompletedSendings(String username) {
+        TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserCompletedSendings", CurrencyTransaction.class);
+        query.setParameter("username", getUserByUsername(username));
 
         try {
             return query.getResultList();
@@ -178,9 +177,9 @@ public class TransactionService {
     }
 
     @RolesAllowed({ "users" })
-    public synchronized List<Transaction> getUserCompletedRecievings(String username) {
-        TypedQuery<Transaction> query = em.createNamedQuery("getUserCompletedRecievings", Transaction.class);
-        query.setParameter("username", username);
+    public synchronized List<CurrencyTransaction> getUserCompletedRecievings(String username) {
+        TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserCompletedRecievings", CurrencyTransaction.class);
+        query.setParameter("username", getUserByUsername(username));
 
         try {
             return query.getResultList();
@@ -201,8 +200,8 @@ public class TransactionService {
     }
 
     @RolesAllowed({ "admins" })
-    public synchronized List<Transaction> getAllTransactions() {
-        TypedQuery<Transaction> query = em.createNamedQuery("getAllTransactions", Transaction.class);
+    public synchronized List<CurrencyTransaction> getAllTransactions() {
+        TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getAllTransactions", CurrencyTransaction.class);
 
         try {
             return query.getResultList();

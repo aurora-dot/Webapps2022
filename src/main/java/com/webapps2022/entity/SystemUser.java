@@ -5,14 +5,15 @@
 package com.webapps2022.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -23,17 +24,11 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "getAllUsers", query = "SELECT u FROM SystemUser u"),
     @NamedQuery(name = "getUserByUsername", query = "SELECT u FROM SystemUser u WHERE u.username = :username"),
-    @NamedQuery(name = "getUserIDFromUsername", query = "SELECT u.username FROM SystemUser u WHERE u.id = :id")
 })
 
 @Entity
 public class SystemUser implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(unique = true)
-    @NotNull
     String username;
 
     @NotNull
@@ -51,25 +46,29 @@ public class SystemUser implements Serializable {
     @NotNull
     CurrencyEnum currencyType;
 
+    @OneToOne
+    @NotNull
+    private SystemUserGroup group;  
+
+    @OneToMany(mappedBy = "fromSystemUser")
+    List<CurrencyTransaction> outTransactions;
+
+    @OneToMany(mappedBy = "toSystemUser")
+    List<CurrencyTransaction> inTransactions;
+
+
     public SystemUser() {
     }
 
     public SystemUser(String username, String password, String name, String surname, Float currencyCount,
-            CurrencyEnum currencyType) {
+            CurrencyEnum currencyType, SystemUserGroup group) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.surname = username;
         this.currencyCount = currencyCount;
         this.currencyType = currencyType;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.group = group;
     }
 
     public String getUsername() {
@@ -120,16 +119,41 @@ public class SystemUser implements Serializable {
         this.currencyType = currencyType;
     }
 
+    public SystemUserGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(SystemUserGroup group) {
+        this.group = group;
+    }
+
+    public List<CurrencyTransaction> getOutTransactions() {
+        return outTransactions;
+    }
+
+    public void setOutTransactions(List<CurrencyTransaction> outTransactions) {
+        this.outTransactions = outTransactions;
+    }
+
+    public List<CurrencyTransaction> getInTransactions() {
+        return inTransactions;
+    }
+
+    public void setInTransactions(List<CurrencyTransaction> inTransactions) {
+        this.inTransactions = inTransactions;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.id);
         hash = 71 * hash + Objects.hashCode(this.name);
         hash = 71 * hash + Objects.hashCode(this.surname);
         hash = 71 * hash + Objects.hashCode(this.username);
         hash = 71 * hash + Objects.hashCode(this.password);
         hash = 71 * hash + Objects.hashCode(this.currencyCount);
         hash = 71 * hash + Objects.hashCode(this.currencyType);
+        hash = 71 * hash + Objects.hashCode(this.outTransactions);
+        hash = 71 * hash + Objects.hashCode(this.inTransactions);
 
         return hash;
     }
@@ -143,9 +167,6 @@ public class SystemUser implements Serializable {
             return false;
         }
         final SystemUser other = (SystemUser) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
@@ -162,6 +183,14 @@ public class SystemUser implements Serializable {
         }
 
         if (!Objects.equals(this.currencyType, other.currencyType)) {
+            return false;
+        }
+
+        if (!Objects.equals(this.outTransactions, other.outTransactions)) {
+            return false;
+        }
+
+        if (!Objects.equals(this.inTransactions, other.inTransactions)) {
             return false;
         }
 

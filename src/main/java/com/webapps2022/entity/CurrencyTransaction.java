@@ -7,11 +7,14 @@ package com.webapps2022.entity;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -20,27 +23,29 @@ import javax.validation.constraints.NotNull;
  */
 
 @NamedQueries({
-    @NamedQuery(name = "getAllTransactions", query = "SELECT t FROM Transaction t"),
-    @NamedQuery(name = "getUserAllTransactions", query = "SELECT t FROM Transaction t WHERE t.fromUsername = :username OR t.toUsername = :username"),
+    @NamedQuery(name = "getAllTransactions", query = "SELECT t FROM CurrencyTransaction t"),
+    @NamedQuery(name = "getUserAllTransactions", query = "SELECT t FROM CurrencyTransaction t WHERE t.fromSystemUser = :systemUser OR t.toSystemUser = :systemUser"),
 
-    @NamedQuery(name = "getUserRequestsSending", query = "SELECT t FROM Transaction t WHERE t.fromUsername = :username AND t.completed = false"),
-    @NamedQuery(name = "getUserRequestsRecieving", query = "SELECT t FROM Transaction t WHERE t.toUsername = :username AND t.completed = false"),
+    @NamedQuery(name = "getUserRequestsSending", query = "SELECT t FROM CurrencyTransaction t WHERE t.fromSystemUser = :systemUser AND t.completed = false"),
+    @NamedQuery(name = "getUserRequestsRecieving", query = "SELECT t FROM CurrencyTransaction t WHERE t.toSystemUser = :systemUser AND t.completed = false"),
         
-    @NamedQuery(name = "getUserCompletedSendings", query = "SELECT t FROM Transaction t WHERE t.fromUsername = :username AND t.completed = true"),
-    @NamedQuery(name = "getUserCompletedRecievings", query = "SELECT t FROM Transaction t WHERE t.toUsername = :username AND t.completed = true"),
+    @NamedQuery(name = "getUserCompletedSendings", query = "SELECT t FROM CurrencyTransaction t WHERE t.fromSystemUser = :systemUser AND t.completed = true"),
+    @NamedQuery(name = "getUserCompletedRecievings", query = "SELECT t FROM CurrencyTransaction t WHERE t.toSystemUser = :systemUser AND t.completed = true"),
 })
 
 @Entity
-public class Transaction implements Serializable {
+public class CurrencyTransaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne(fetch=FetchType.LAZY)
     @NotNull
-    String toUsername;
+    SystemUser toSystemUser;
 
+    @ManyToOne(fetch=FetchType.LAZY)
     @NotNull
-    String fromUsername;
+    SystemUser fromSystemUser;
 
     @NotNull
     Float currencyCountTo;
@@ -58,12 +63,12 @@ public class Transaction implements Serializable {
     boolean completed;
 
 
-    public Transaction() {
+    public CurrencyTransaction() {
     }
 
-    public Transaction(String toUsername, String fromUsername, Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom, boolean completed) {
-        this.toUsername = toUsername;
-        this.fromUsername = fromUsername;
+    public CurrencyTransaction(SystemUser toSystemUser, SystemUser fromSystemUser, Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom, boolean completed) {
+        this.toSystemUser = toSystemUser;
+        this.toSystemUser = toSystemUser;
         this.currencyCountTo = currencyCountTo;
         this.currencyCountFrom = currencyCountFrom;
         this.currencyTypeTo = currencyTypeTo;
@@ -79,20 +84,20 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public String getToUsername() {
-        return toUsername;
+    public SystemUser getToSystemUser() {
+        return toSystemUser;
     }
 
-    public void setToUsername(String toUsername) {
-        this.toUsername = toUsername;
+    public void setToSystemUser(SystemUser toSystemUser) {
+        this.toSystemUser = toSystemUser;
     }
 
-    public String getFromUsername() {
-        return fromUsername;
+    public SystemUser getFromSystemUser() {
+        return fromSystemUser;
     }
 
-    public void setFromUsername(String fromUsername) {
-        this.fromUsername = fromUsername;
+    public void setFromSystemUser(SystemUser fromSystemUser) {
+        this.fromSystemUser = fromSystemUser;
     }
 
     public Float getCurrencyCountTo() {
@@ -141,8 +146,8 @@ public class Transaction implements Serializable {
     public int hashCode() {
         int hash = 3;
         hash = 64 * hash + Objects.hashCode(this.id);
-        hash = 64 * hash + Objects.hashCode(this.toUsername);
-        hash = 64 * hash + Objects.hashCode(this.fromUsername);
+        hash = 64 * hash + Objects.hashCode(this.toSystemUser);
+        hash = 64 * hash + Objects.hashCode(this.fromSystemUser);
         hash = 64 * hash + Objects.hashCode(this.currencyCountTo);
         hash = 64 * hash + Objects.hashCode(this.currencyCountFrom);
         hash = 64 * hash + Objects.hashCode(this.currencyTypeTo);
@@ -160,14 +165,14 @@ public class Transaction implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Transaction other = (Transaction) obj;
+        final CurrencyTransaction other = (CurrencyTransaction) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.toUsername, other.toUsername)) {
+        if (!Objects.equals(this.toSystemUser, other.toSystemUser)) {
             return false;
         }
-        if (!Objects.equals(this.fromUsername, other.fromUsername)) {
+        if (!Objects.equals(this.fromSystemUser, other.fromSystemUser)) {
             return false;
         }
 

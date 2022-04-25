@@ -6,20 +6,21 @@
   xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
   <h:head>
-    <title>Registration | PalPay</title>
+    <title>Admin Registration | PalPay</title>
   </h:head>
   <h:body>
     <h2>Admin Registration</h2>
     <h:form>
       Fill in the details and press the register button.
       <br />
-      <h:outputLabel for="username" value="*User name: " />
+      <h:outputLabel for="username" value="*Username: " />
       <h:inputText
         id="username"
         value="#{registrationBean.username}"
-        title="Enter user name"
+        title="Enter username"
         required="true"
         requiredMessage="Mandatory Field"
+        size="128"
       />
       &nbsp;
       <h:message style="color: red" for="username" />
@@ -32,6 +33,7 @@
         label="password"
         required="true"
         requiredMessage="Mandatory Field"
+        size="128"
       >
       </h:inputSecret>
       &nbsp;

@@ -76,10 +76,10 @@ public class UserService {
             String paswdToStoreInDB = bigInt.toString(16);
 
             if (!userExists(username)) {
-                sys_user = new SystemUser(username, paswdToStoreInDB, name, surname, currencyCount, currencyType);
                 sys_user_group = new SystemUserGroup(username, group);
+                sys_user = new SystemUser(username, paswdToStoreInDB, name, surname, currencyCount, currencyType, sys_user_group);
+                em.persist(sys_user_group);   
                 em.persist(sys_user);
-                em.persist(sys_user_group);
                 em.flush();
 
                 return "index";
