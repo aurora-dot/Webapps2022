@@ -68,7 +68,7 @@ public class CurrencyTransaction implements Serializable {
 
     public CurrencyTransaction(SystemUser toSystemUser, SystemUser fromSystemUser, Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom, boolean completed) {
         this.toSystemUser = toSystemUser;
-        this.toSystemUser = toSystemUser;
+        this.fromSystemUser = fromSystemUser;
         this.currencyCountTo = currencyCountTo;
         this.currencyCountFrom = currencyCountFrom;
         this.currencyTypeTo = currencyTypeTo;

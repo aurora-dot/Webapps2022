@@ -4,7 +4,7 @@
  */
 package com.webapps2022.ejb;
 
-import com.webapps2022.entity.CurrencyEnum;
+import static com.webapps2022.entity.CurrencyEnum.GBP;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
@@ -25,7 +25,7 @@ public class StartupEJB {
     @PostConstruct
     private void startup() {
         if (!usrSrv.userExists("admin1")) {
-            usrSrv.registerAdmin("admin1", "admin1", "admin1", "admin", "admin", (float) 100, CurrencyEnum.GBP);
+            usrSrv.registerAdmin("admin1", "admin1", "admin1", "admin", "admin", (float) 100, GBP);
         }
     }
 

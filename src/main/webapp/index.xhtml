@@ -13,8 +13,9 @@
 
     <c:if test="#{loginBean.visitorUser}">
       <h3>Hello user: <h:outputText value="${request.remoteUser}" /></h3>
-      <h4>Your balance: <h:outputText value="${currencyTransactionBean.getCurrentUserCurrencyCount(request.remoteUser)}"/></h4>
+      <h4>Your balance: <h:outputText value="${currencyTransactionBean.getUserCurrencyCount(request.remoteUser)}"/></h4>
       <div><h:link value="Request currency" outcome="request" /></div>
+      <div><h:link value="Send currency" outcome="send" /></div>
     </c:if>
 
     <c:if test="#{loginBean.visitorAdmin}">

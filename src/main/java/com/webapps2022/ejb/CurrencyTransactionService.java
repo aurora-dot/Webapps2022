@@ -32,7 +32,7 @@ public class CurrencyTransactionService {
     }
 
     @RolesAllowed({ "users" })
-    public synchronized CurrencyTransaction createTransaction(SystemUser toSystemUser, SystemUser fromSystemUser,
+    private synchronized CurrencyTransaction createTransaction(SystemUser toSystemUser, SystemUser fromSystemUser,
             Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom,
             Boolean finalised) {
         return new CurrencyTransaction(toSystemUser, fromSystemUser, currencyCountTo,
@@ -87,10 +87,18 @@ public class CurrencyTransactionService {
         toUser.setCurrencyCount(toUser.getCurrencyCount() + currencyCountTo);
         fromUser.setCurrencyCount(fromUser.getCurrencyCount() - currencyCountFrom);
 
-        em.persist(createTransaction(toUser, fromUser, currencyCountTo, currencyCountFrom, toUser.getCurrencyType(),
-                fromUser.getCurrencyType(), true));
         em.persist(fromUser);
         em.persist(toUser);
+        System.out.println(toUser.getUsername());
+        System.out.println(fromUser.getUsername());
+        System.out.println(currencyCountTo);
+        System.out.println(currencyCountFrom);
+        System.out.println(toUser.getCurrencyType());
+        System.out.println(fromUser.getCurrencyType());
+
+
+        em.persist(createTransaction(toUser, fromUser, currencyCountTo, currencyCountFrom, toUser.getCurrencyType(),
+                fromUser.getCurrencyType(), true));
         em.flush();
 
         return true;
@@ -131,7 +139,7 @@ public class CurrencyTransactionService {
     @RolesAllowed({ "users" })
     public synchronized List<CurrencyTransaction> getUserAllTransactions(String username) {
         TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserAllTransactions", CurrencyTransaction.class);
-        query.setParameter("username", getUserByUsername(username));
+        query.setParameter("systemUser", getUserByUsername(username));
 
         try {
             return query.getResultList();
@@ -143,7 +151,7 @@ public class CurrencyTransactionService {
     @RolesAllowed({ "users" })
     public synchronized List<CurrencyTransaction> getUserRequestsSending(String username) {
         TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserRequestsSending", CurrencyTransaction.class);
-        query.setParameter("username", getUserByUsername(username));
+        query.setParameter("systemUser", getUserByUsername(username));
 
         try {
             return query.getResultList();
@@ -155,7 +163,7 @@ public class CurrencyTransactionService {
     @RolesAllowed({ "users" })
     public synchronized List<CurrencyTransaction> getUserRequestsRecieving(String username) {
         TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserRequestsRecieving", CurrencyTransaction.class);
-        query.setParameter("username", getUserByUsername(username));
+        query.setParameter("systemUser", getUserByUsername(username));
 
         try {
             return query.getResultList();
@@ -167,7 +175,7 @@ public class CurrencyTransactionService {
     @RolesAllowed({ "users" })
     public synchronized List<CurrencyTransaction> getUserCompletedSendings(String username) {
         TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserCompletedSendings", CurrencyTransaction.class);
-        query.setParameter("username", getUserByUsername(username));
+        query.setParameter("systemUser", getUserByUsername(username));
 
         try {
             return query.getResultList();
@@ -179,7 +187,7 @@ public class CurrencyTransactionService {
     @RolesAllowed({ "users" })
     public synchronized List<CurrencyTransaction> getUserCompletedRecievings(String username) {
         TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserCompletedRecievings", CurrencyTransaction.class);
-        query.setParameter("username", getUserByUsername(username));
+        query.setParameter("systemUser", getUserByUsername(username));
 
         try {
             return query.getResultList();

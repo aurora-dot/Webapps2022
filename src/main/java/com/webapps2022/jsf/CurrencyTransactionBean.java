@@ -48,26 +48,22 @@ public class CurrencyTransactionBean {
         this.currencyCount = currencyCount;
     }
 
-    public String getCurrentUserCurrencyCount(String username) {
-        try {
-            SystemUser user = transactionService.getUserByUsername(username);
-            return CurrencyEnum.getCurrencySymbol(user.getCurrencyType()) + user.getCurrencyCount();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return null;  
+    public String getUserCurrencyCount(String username) {
+        SystemUser user = transactionService.getUserByUsername(username);
+        return CurrencyEnum.getCurrencySymbol(user.getCurrencyType()) + user.getCurrencyCount();
     }
 
-    public String getCurrentUserCurrencySymbol(String username) {
-        try {
-            SystemUser user = transactionService.getUserByUsername(username);
-            return CurrencyEnum.getCurrencySymbol(user.getCurrencyType());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    public String getUserCurrencySymbol(String username) {
+        SystemUser user = transactionService.getUserByUsername(username);
+        return CurrencyEnum.getCurrencySymbol(user.getCurrencyType());
+    }
 
-        return null;  
+    public boolean sendPayment(String currentUsername) {
+        return transactionService.sendPayment(otherUsername, currentUsername, currencyCount);
+    }
+
+    public boolean requestPayment(String currentUsername) {
+        return transactionService.requestPayment(currentUsername, otherUsername, currencyCount);
     }
 
 }
