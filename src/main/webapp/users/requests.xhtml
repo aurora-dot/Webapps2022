@@ -31,10 +31,12 @@
                     <h:outputText value="| #{transaction.completed}"/>
                 </h:column>
                 <h:column>
+                    <f:facet name="header">|---- Accept request ---- |</f:facet>
                     <h:commandButton id="Accept" title="Accept" value="Accept" action="#{currencyTransactionBean.acceptRequest(transaction)}" />
                 </h:column>
                  <h:column>
-                     <h:commandButton id="Deny" title="Deny" value="Deny" action="#{currencyTransactionBean.denyRequest(transaction)}" />
+                    <f:facet name="header">|---- Deny request ---- |</f:facet>
+                    <h:commandButton id="Deny" title="Deny" value="Deny" action="#{currencyTransactionBean.denyRequest(transaction)}" />
                 </h:column>
             </h:dataTable>
         </h:form>

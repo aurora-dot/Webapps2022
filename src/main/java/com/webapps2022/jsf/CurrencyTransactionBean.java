@@ -11,6 +11,8 @@ import com.webapps2022.entity.SystemUser;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 /**
@@ -60,12 +62,31 @@ public class CurrencyTransactionBean {
         return CurrencyEnum.getCurrencySymbol(user.getCurrencyType());
     }
 
-    public boolean sendPayment(String currentUsername) {
-        return transactionService.sendPayment(otherUsername, currentUsername, currencyCount);
+    public void sendPayment(String currentUsername) {
+        String returned = transactionService.sendPayment(otherUsername, currentUsername, currencyCount);
+        currencyCommon(returned);
     }
 
-    public boolean requestPayment(String currentUsername) {
-        return transactionService.requestPayment(currentUsername, otherUsername, currencyCount);
+    public void requestPayment(String currentUsername) {
+        String returned = transactionService.requestPayment(currentUsername, otherUsername, currencyCount);
+        currencyCommon(returned);
+    }
+
+    public void acceptRequest(CurrencyTransaction transaction) {
+        String returned = transactionService.acceptRequest(transaction);
+        currencyCommon(returned);
+    }
+
+    public void denyRequest(CurrencyTransaction transaction) {
+        String returned = transactionService.denyRequest(transaction);
+        currencyCommon(returned);
+    }
+
+    public void currencyCommon(String returned) {
+        FacesMessage.Severity faceMessageType;
+        if (!returned.contains("!")) faceMessageType = FacesMessage.SEVERITY_ERROR;
+        else faceMessageType = FacesMessage.SEVERITY_INFO;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(faceMessageType, returned, ""));
     }
 
     public List<CurrencyTransaction> completedTransactions(String currentUsername) {
@@ -76,11 +97,11 @@ public class CurrencyTransactionBean {
         return transactionService.getUserRequestsSending(currentUsername);
     }
 
-    public boolean acceptRequest(CurrencyTransaction transaction) {
-        return transactionService.acceptRequest(transaction);
+    public List<CurrencyTransaction> allTransactions() {
+        return transactionService.getAllTransactions();
     }
 
-    public boolean denyRequest(CurrencyTransaction transaction) {
-        return transactionService.denyRequest(transaction);
+    public List<SystemUser> allUsers() {
+        return transactionService.getAllUsers();
     }
 }

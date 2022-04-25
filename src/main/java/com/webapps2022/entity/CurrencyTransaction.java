@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -24,14 +23,8 @@ import javax.validation.constraints.NotNull;
 
 @NamedQueries({
     @NamedQuery(name = "getAllTransactions", query = "SELECT t FROM CurrencyTransaction t"),
-    @NamedQuery(name = "getUserAllTransactions", query = "SELECT t FROM CurrencyTransaction t WHERE t.fromSystemUser = :systemUser OR t.toSystemUser = :systemUser"),
     @NamedQuery(name = "getUserCompletedTransactions", query = "SELECT t FROM CurrencyTransaction t WHERE (t.fromSystemUser = :systemUser OR t.toSystemUser = :systemUser) AND t.completed = true"),
-
-    @NamedQuery(name = "getUserRequestsSending", query = "SELECT t FROM CurrencyTransaction t WHERE t.fromSystemUser = :systemUser AND t.completed = false"),
-    @NamedQuery(name = "getUserRequestsRecieving", query = "SELECT t FROM CurrencyTransaction t WHERE t.toSystemUser = :systemUser AND t.completed = false"),
-    
-    @NamedQuery(name = "getUserCompletedSendings", query = "SELECT t FROM CurrencyTransaction t WHERE t.fromSystemUser = :systemUser AND t.completed = true"),
-    @NamedQuery(name = "getUserCompletedRecievings", query = "SELECT t FROM CurrencyTransaction t WHERE t.toSystemUser = :systemUser AND t.completed = true"),
+    @NamedQuery(name = "getUserRequestsSending", query = "SELECT t FROM CurrencyTransaction t WHERE t.fromSystemUser = :systemUser AND t.completed = false"),    
 })
 
 @Entity

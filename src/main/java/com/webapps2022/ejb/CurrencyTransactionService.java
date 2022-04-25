@@ -40,13 +40,13 @@ public class CurrencyTransactionService {
     }
 
     @RolesAllowed({ "users" })
-    public synchronized boolean acceptRequest(CurrencyTransaction pendingTransaction) {
+    public synchronized String acceptRequest(CurrencyTransaction pendingTransaction) {
         SystemUser fromUser = pendingTransaction.getFromSystemUser();
         SystemUser toUser = pendingTransaction.getToSystemUser();
 
         float currencyCount = pendingTransaction.getCurrencyCountFrom();
         if (fromUser.getCurrencyCount() < currencyCount)
-            return false;
+            return "Not enough money in balance.";
 
         toUser.setCurrencyCount(toUser.getCurrencyCount() + pendingTransaction.getCurrencyCountTo());
         fromUser.setCurrencyCount(fromUser.getCurrencyCount() - pendingTransaction.getCurrencyCountFrom());
@@ -57,27 +57,27 @@ public class CurrencyTransactionService {
         em.merge(toUser);
         em.flush();
 
-        return true;
+        return "Success!";
 
     }
 
     @RolesAllowed({ "users" })
-    public synchronized boolean denyRequest(CurrencyTransaction pendingTransaction) {
+    public synchronized String denyRequest(CurrencyTransaction pendingTransaction) {
         em.remove(em.find(CurrencyTransaction.class, pendingTransaction.getId()));
         em.flush();
 
-        return true;
+        return "Success!";
     }
 
     @RolesAllowed({ "users" })
-    public synchronized boolean sendPayment(String toUsername, String fromUsername, float currencyCount) {
+    public synchronized String sendPayment(String toUsername, String fromUsername, float currencyCount) {
         SystemUser toUser = getUserByUsername(toUsername);
         SystemUser fromUser = getUserByUsername(fromUsername);
 
         if (toUser == null || fromUser == null)
-            return false;
+            return "No such user.";
         if (fromUser.getCurrencyCount() < currencyCount)
-            return false;
+            return "Not enough money in balance.";
 
         float fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
 
@@ -93,16 +93,16 @@ public class CurrencyTransactionService {
                 fromUser.getCurrencyType(), true));
         em.flush();
 
-        return true;
+        return "Success!";
     }
 
     @RolesAllowed({ "users" })
-    public synchronized boolean requestPayment(String toUsername, String fromUsername, float currencyCount) {
+    public synchronized String requestPayment(String toUsername, String fromUsername, float currencyCount) {
         SystemUser toUser = getUserByUsername(toUsername);
         SystemUser fromUser = getUserByUsername(fromUsername);
 
         if (toUser == null || fromUser == null)
-            return false;
+            return "No such user.";
 
         float fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
         float currencyCountTo = currencyCount * fromCurrency;
@@ -112,7 +112,7 @@ public class CurrencyTransactionService {
                 fromUser.getCurrencyType(), false));
         em.flush();
 
-        return true;
+        return "Sent request!";
 
     }
 
@@ -129,56 +129,8 @@ public class CurrencyTransactionService {
     }
 
     @RolesAllowed({ "users" })
-    public synchronized List<CurrencyTransaction> getUserAllTransactions(String username) {
-        TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserAllTransactions", CurrencyTransaction.class);
-        query.setParameter("systemUser", getUserByUsername(username));
-
-        try {
-            return query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
-
-    @RolesAllowed({ "users" })
     public synchronized List<CurrencyTransaction> getUserRequestsSending(String username) {
         TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserRequestsSending", CurrencyTransaction.class);
-        query.setParameter("systemUser", getUserByUsername(username));
-
-        try {
-            return query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
-
-    @RolesAllowed({ "users" })
-    public synchronized List<CurrencyTransaction> getUserRequestsRecieving(String username) {
-        TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserRequestsRecieving", CurrencyTransaction.class);
-        query.setParameter("systemUser", getUserByUsername(username));
-
-        try {
-            return query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
-
-    @RolesAllowed({ "users" })
-    public synchronized List<CurrencyTransaction> getUserCompletedSendings(String username) {
-        TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserCompletedSendings", CurrencyTransaction.class);
-        query.setParameter("systemUser", getUserByUsername(username));
-
-        try {
-            return query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
-
-    @RolesAllowed({ "users" })
-    public synchronized List<CurrencyTransaction> getUserCompletedRecievings(String username) {
-        TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserCompletedRecievings", CurrencyTransaction.class);
         query.setParameter("systemUser", getUserByUsername(username));
 
         try {
