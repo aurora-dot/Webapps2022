@@ -14,7 +14,7 @@ import javax.ws.rs.core.Application;
  * @author blankie
  */
 
-@ApplicationPath("/")
+@ApplicationPath("/conversion")
 public class RSApplication extends Application {
 
     @Override

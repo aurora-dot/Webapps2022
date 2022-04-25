@@ -188,6 +188,14 @@ public class SystemUser implements Serializable {
             return false;
         }
 
+        if (!Objects.equals(this.outTransactions, other.outTransactions)) {
+            return false;
+        }
+
+        if (!Objects.equals(this.inTransactions, other.inTransactions)) {
+            return false;
+        }
+
         return Objects.equals(this.password, other.password);
     }
 }

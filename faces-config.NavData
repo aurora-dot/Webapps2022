@@ -3,8 +3,8 @@
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
         <Node id="error.xhtml" x="3577" y="32" zoom="true"/>
-        <Node id="admins/accounts.xhtml" x="593" y="32" zoom="true"/>
         <Node id="admins/user.xhtml" x="911" y="32" zoom="true"/>
+        <Node id="admins/accounts.xhtml" x="593" y="32" zoom="true"/>
         <Node id="index.xhtml" x="3345" y="32" zoom="true"/>
         <Node id="admins/registration.xhtml" x="1782" y="32" zoom="true"/>
         <Node id="registration.xhtml" x="1201" y="32" zoom="true"/>

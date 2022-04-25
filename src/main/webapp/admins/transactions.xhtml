@@ -22,11 +22,15 @@
                 <h:outputText value="| #{transaction.toSystemUser.username}"/>
             </h:column>
             <h:column>
-                <f:facet name="header">|---- Receiver money added ---- |</f:facet>
+                <f:facet name="header">|---- Receiver money added ----|</f:facet>
                 <h:outputText value="| +#{transaction.currencyTypeFrom.getCurrencySymbol(transaction.currencyTypeTo)}#{transaction.currencyCountTo}"/>
             </h:column>
             <h:column>
-                <f:facet name="header">|---- Completed ---- |</f:facet>
+                <f:facet name="header">|---------- Timestamp ----------|</f:facet>
+                <h:outputText value="| #{transaction.timeStamp.toString()}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">|---- Completed ----|</f:facet>
                 <h:outputText value="| #{transaction.completed}"/>
             </h:column>
         </h:dataTable>

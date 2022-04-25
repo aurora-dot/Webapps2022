@@ -7,6 +7,8 @@ package com.webapps2022.ejb;
 import com.webapps2022.entity.CurrencyEnum;
 import com.webapps2022.entity.SystemUser;
 import com.webapps2022.entity.CurrencyTransaction;
+import com.webapps2022.thrift.TimestampService;
+import java.time.Instant;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -16,6 +18,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import org.apache.thrift.TException;
+import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.transport.TSocket;
+import org.apache.thrift.transport.TTransport;
 
 /**
  *
@@ -34,9 +41,9 @@ public class CurrencyTransactionService {
     @RolesAllowed({ "users" })
     private synchronized CurrencyTransaction createTransaction(SystemUser toSystemUser, SystemUser fromSystemUser,
             Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom,
-            Boolean finalised) {
+            Boolean finalised, Instant timeStamp) {
         return new CurrencyTransaction(toSystemUser, fromSystemUser, currencyCountTo,
-                currencyCountFrom, currencyTypeTo, currencyTypeFrom, finalised);
+                currencyCountFrom, currencyTypeTo, currencyTypeFrom, timeStamp, finalised);
     }
 
     @RolesAllowed({ "users" })
@@ -90,7 +97,7 @@ public class CurrencyTransactionService {
         em.persist(fromUser);
         em.persist(toUser);
         em.persist(createTransaction(toUser, fromUser, currencyCountTo, currencyCountFrom, toUser.getCurrencyType(),
-                fromUser.getCurrencyType(), true));
+                fromUser.getCurrencyType(), true, getTimestamp()));
         em.flush();
 
         return "Success!";
@@ -109,7 +116,7 @@ public class CurrencyTransactionService {
         float currencyCountFrom = currencyCount;
 
         em.persist(createTransaction(toUser, fromUser, currencyCountTo, currencyCountFrom, toUser.getCurrencyType(),
-                fromUser.getCurrencyType(), false));
+                fromUser.getCurrencyType(), false, getTimestamp()));
         em.flush();
 
         return "Sent request!";
@@ -175,5 +182,28 @@ public class CurrencyTransactionService {
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    @RolesAllowed({ "users", "admins" })
+    public synchronized Instant getTimestamp() {
+        try {
+            TTransport transport;
+
+            transport = new TSocket("localhost", 9090);
+            transport.open();
+
+            TProtocol protocol = new TBinaryProtocol(transport);
+            TimestampService.Client client = new TimestampService.Client(protocol);
+
+            long result = client.getTimestamp();
+            transport.close();
+
+            return Instant.ofEpochMilli(result);
+
+        } catch (TException x) {
+            System.err.println(x);
+        }
+
+        return null;
     }
 }

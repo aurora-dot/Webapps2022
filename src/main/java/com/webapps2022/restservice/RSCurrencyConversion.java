@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
  */
 
 @Singleton
-@Path("/conversion")
+@Path("/")
 public class RSCurrencyConversion {
     @GET
     @Path("/{currency1}/{currency2}/{amount_of_currency}")

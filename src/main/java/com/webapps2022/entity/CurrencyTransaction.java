@@ -5,6 +5,7 @@
 package com.webapps2022.entity;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -54,13 +55,16 @@ public class CurrencyTransaction implements Serializable {
     CurrencyEnum currencyTypeFrom;
 
     @NotNull
+    Instant transactionTimeStamp;
+
+    @NotNull
     boolean completed;
 
 
     public CurrencyTransaction() {
     }
 
-    public CurrencyTransaction(SystemUser toSystemUser, SystemUser fromSystemUser, Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom, boolean completed) {
+    public CurrencyTransaction(SystemUser toSystemUser, SystemUser fromSystemUser, Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom, Instant timeStamp, boolean completed) {
         this.toSystemUser = toSystemUser;
         this.fromSystemUser = fromSystemUser;
         this.currencyCountTo = currencyCountTo;
@@ -68,6 +72,7 @@ public class CurrencyTransaction implements Serializable {
         this.currencyTypeTo = currencyTypeTo;
         this.currencyTypeFrom = currencyTypeFrom;
         this.completed = completed;
+        this.transactionTimeStamp = timeStamp;
     }
 
     public Long getId() {
@@ -134,7 +139,13 @@ public class CurrencyTransaction implements Serializable {
         this.completed = completed;
     }
 
+    public Instant getTimeStamp() {
+        return transactionTimeStamp;
+    }
 
+    public void setTimeStamp(Instant timeStamp) {
+        this.transactionTimeStamp = timeStamp;
+    }
 
     @Override
     public int hashCode() {
@@ -147,6 +158,7 @@ public class CurrencyTransaction implements Serializable {
         hash = 64 * hash + Objects.hashCode(this.currencyTypeTo);
         hash = 64 * hash + Objects.hashCode(this.currencyTypeFrom);
         hash = 64 * hash + Objects.hashCode(this.completed);
+        hash = 64 * hash + Objects.hashCode(this.transactionTimeStamp);
 
         return hash;
     }
@@ -183,6 +195,10 @@ public class CurrencyTransaction implements Serializable {
         }
 
         if (!Objects.equals(this.currencyTypeFrom, other.currencyTypeFrom)) {
+            return false;
+        }
+
+        if (!Objects.equals(this.transactionTimeStamp, other.transactionTimeStamp)) {
             return false;
         }
 
