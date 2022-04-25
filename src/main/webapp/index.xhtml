@@ -16,6 +16,8 @@
       <h4>Your balance: <h:outputText value="${currencyTransactionBean.getUserCurrencyCount(request.remoteUser)}"/></h4>
       <div><h:link value="Request currency" outcome="request" /></div>
       <div><h:link value="Send currency" outcome="send" /></div>
+      <div><h:link value="Transactions" outcome="transactions" /></div>
+      <div><h:link value="Currency requests from you" outcome="requests" /></div>
     </c:if>
 
     <c:if test="#{loginBean.visitorAdmin}">

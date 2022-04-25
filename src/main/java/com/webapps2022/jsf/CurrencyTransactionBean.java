@@ -6,7 +6,9 @@ package com.webapps2022.jsf;
 
 import com.webapps2022.ejb.CurrencyTransactionService;
 import com.webapps2022.entity.CurrencyEnum;
+import com.webapps2022.entity.CurrencyTransaction;
 import com.webapps2022.entity.SystemUser;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
@@ -66,4 +68,19 @@ public class CurrencyTransactionBean {
         return transactionService.requestPayment(currentUsername, otherUsername, currencyCount);
     }
 
+    public List<CurrencyTransaction> completedTransactions(String currentUsername) {
+        return transactionService.getUserCompletedTransactions(currentUsername);
+    }
+
+    public List<CurrencyTransaction> outboundUserRequestedTransactions(String currentUsername) {
+        return transactionService.getUserRequestsSending(currentUsername);
+    }
+
+    public boolean acceptRequest(CurrencyTransaction transaction) {
+        return transactionService.acceptRequest(transaction);
+    }
+
+    public boolean denyRequest(CurrencyTransaction transaction) {
+        return transactionService.denyRequest(transaction);
+    }
 }

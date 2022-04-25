@@ -10,7 +10,7 @@
         <h2>Send currency</h2>
         <p>Your balance: <h:outputText value="${currencyTransactionBean.getUserCurrencyCount(request.remoteUser)}"/></p>
         <h:form>
-            <h:outputLabel for="username" value="*Username to request: " />
+            <h:outputLabel for="username" value="*Username to send: " />
             <h:inputText
               id="username"
               value="#{currencyTransactionBean.otherUsername}"

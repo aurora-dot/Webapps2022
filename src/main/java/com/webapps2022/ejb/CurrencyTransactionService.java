@@ -40,8 +40,7 @@ public class CurrencyTransactionService {
     }
 
     @RolesAllowed({ "users" })
-    public synchronized boolean acceptRequest(Long id) {
-        CurrencyTransaction pendingTransaction = em.find(CurrencyTransaction.class, id);
+    public synchronized boolean acceptRequest(CurrencyTransaction pendingTransaction) {
         SystemUser fromUser = pendingTransaction.getFromSystemUser();
         SystemUser toUser = pendingTransaction.getToSystemUser();
 
@@ -51,10 +50,11 @@ public class CurrencyTransactionService {
 
         toUser.setCurrencyCount(toUser.getCurrencyCount() + pendingTransaction.getCurrencyCountTo());
         fromUser.setCurrencyCount(fromUser.getCurrencyCount() - pendingTransaction.getCurrencyCountFrom());
+        pendingTransaction.setCompleted(true);
 
-        em.find(CurrencyTransaction.class, pendingTransaction.getId()).setCompleted(true);
-        em.persist(fromUser);
-        em.persist(toUser);
+        em.merge(pendingTransaction);
+        em.merge(fromUser);
+        em.merge(toUser);
         em.flush();
 
         return true;
@@ -62,8 +62,8 @@ public class CurrencyTransactionService {
     }
 
     @RolesAllowed({ "users" })
-    public synchronized boolean denyRequest(Long id) {
-        em.remove(em.find(CurrencyTransaction.class, id));
+    public synchronized boolean denyRequest(CurrencyTransaction pendingTransaction) {
+        em.remove(em.find(CurrencyTransaction.class, pendingTransaction.getId()));
         em.flush();
 
         return true;
@@ -89,14 +89,6 @@ public class CurrencyTransactionService {
 
         em.persist(fromUser);
         em.persist(toUser);
-        System.out.println(toUser.getUsername());
-        System.out.println(fromUser.getUsername());
-        System.out.println(currencyCountTo);
-        System.out.println(currencyCountFrom);
-        System.out.println(toUser.getCurrencyType());
-        System.out.println(fromUser.getCurrencyType());
-
-
         em.persist(createTransaction(toUser, fromUser, currencyCountTo, currencyCountFrom, toUser.getCurrencyType(),
                 fromUser.getCurrencyType(), true));
         em.flush();
@@ -191,6 +183,21 @@ public class CurrencyTransactionService {
 
         try {
             return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @RolesAllowed({ "users" })
+    public synchronized List<CurrencyTransaction> getUserCompletedTransactions(String username) {
+        TypedQuery<CurrencyTransaction> query = em.createNamedQuery("getUserCompletedTransactions", CurrencyTransaction.class);
+        query.setParameter("systemUser", getUserByUsername(username));
+
+        try {
+            List<CurrencyTransaction> stuff = query.getResultList();
+            System.out.println("Got stuff");
+            System.out.println(stuff);
+            return stuff;
         } catch (NoResultException e) {
             return null;
         }

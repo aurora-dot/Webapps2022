@@ -152,8 +152,7 @@ public class SystemUser implements Serializable {
         hash = 71 * hash + Objects.hashCode(this.password);
         hash = 71 * hash + Objects.hashCode(this.currencyCount);
         hash = 71 * hash + Objects.hashCode(this.currencyType);
-        hash = 71 * hash + Objects.hashCode(this.outTransactions);
-        hash = 71 * hash + Objects.hashCode(this.inTransactions);
+        hash = 71 * hash + Objects.hashCode(this.group);
 
         return hash;
     }
@@ -186,11 +185,7 @@ public class SystemUser implements Serializable {
             return false;
         }
 
-        if (!Objects.equals(this.outTransactions, other.outTransactions)) {
-            return false;
-        }
-
-        if (!Objects.equals(this.inTransactions, other.inTransactions)) {
+        if (!Objects.equals(this.group, other.group)) {
             return false;
         }
 
