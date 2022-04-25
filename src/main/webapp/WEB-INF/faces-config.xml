@@ -51,6 +51,10 @@
             <from-outcome>accounts</from-outcome>
             <to-view-id>/admins/accounts.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>conversion</from-outcome>
+            <to-view-id>/conversion.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/users/user.xhtml</from-view-id>
@@ -125,6 +129,13 @@
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/admins/accounts.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/conversion.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>

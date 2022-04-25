@@ -75,7 +75,7 @@ public enum CurrencyEnum {
                             return (float) 1.19;
 
                         case USD:
-                            return (float) 1.28;
+                            return (float) 1.27;
                     }
                 case EUR:
                     switch (toCurrency) {
@@ -86,13 +86,13 @@ public enum CurrencyEnum {
                             return (float) 1.0;
 
                         case USD:
-                            return (float) 1.08;
+                            return (float) 1.07;
                     }
 
                 case USD:
                     switch (toCurrency) {
                         case GBP:
-                            return (float) 0.78;
+                            return (float) 0.93;
 
                         case EUR:
                             return (float) 0.93;

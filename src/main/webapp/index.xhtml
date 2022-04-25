@@ -17,7 +17,7 @@
       <div><h:link value="Request currency" outcome="request" /></div>
       <div><h:link value="Send currency" outcome="send" /></div>
       <div><h:link value="Transactions" outcome="transactions" /></div>
-      <div><h:link value="Currency requests from you" outcome="requests" /></div>
+      <div><h:link value="Requests by others to take from you" outcome="requests" /></div>
     </c:if>
 
     <c:if test="#{loginBean.visitorAdmin}">
@@ -49,6 +49,8 @@
         </div>
     </c:if>
 
+    <h:link value="View currency conversion" outcome="conversion" />
+    
     <c:if test="#{loginBean.visitorAdmin || loginBean.visitorUser}">
       <br />
       <br />

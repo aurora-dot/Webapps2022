@@ -14,6 +14,7 @@ import com.webapps2022.entity.CurrencyEnum;
 import com.webapps2022.entity.SystemUserGroup;
 import com.webapps2022.entity.SystemUser;
 import java.lang.reflect.UndeclaredThrowableException;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.DependsOn;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -36,7 +37,7 @@ public class UserService {
         TypedQuery<SystemUser> query = em.createNamedQuery("getUserByUsername", SystemUser.class);
         query.setParameter("username", username);
         try {
-            SystemUser result = query.getSingleResult();
+            query.getSingleResult();
             return true;
         } catch (UndeclaredThrowableException | PersistenceException e) {
             return false;
@@ -50,6 +51,7 @@ public class UserService {
                 "users");
     }
 
+    @RolesAllowed({ "admins" })
     public String registerAdmin(String username, String password, String confPassword, String name, String surname,
             Float currencyCount,
             CurrencyEnum currencyType) {
@@ -57,7 +59,7 @@ public class UserService {
                 "admins");
     }
 
-    public String registerSystemUser(String username, String password, String confPassword, String name, String surname,
+    private String registerSystemUser(String username, String password, String confPassword, String name, String surname,
             Float currencyCount,
             CurrencyEnum currencyType, String group) {
         try {

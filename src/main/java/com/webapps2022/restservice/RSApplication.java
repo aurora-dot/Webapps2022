@@ -9,12 +9,13 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+
 /**
  *
  * @author blankie
  */
 
-@ApplicationPath("/conversion")
+@ApplicationPath("/")
 public class RSApplication extends Application {
 
     @Override
@@ -22,6 +23,8 @@ public class RSApplication extends Application {
         final Set<Class<?>> classes = new HashSet<Class<?>>();
         //register resource
         classes.add(RSCurrencyConversion.class);
+        classes.add(RSRedirect.class);
+
         return classes;
     }
 }
