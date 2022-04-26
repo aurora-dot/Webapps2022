@@ -94,7 +94,7 @@ public enum CurrencyEnum {
                 case USD:
                     switch (toCurrency) {
                         case GBP:
-                            return BigDecimal.valueOf(0.93);
+                            return BigDecimal.valueOf(0.79);
 
                         case EUR:
                             return BigDecimal.valueOf(0.93);
