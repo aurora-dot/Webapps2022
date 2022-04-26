@@ -58,8 +58,6 @@ public class RestService {
                 .path(currency2.toString())
                 .path(amountOfCurrency.toString());
 
-        System.out.println(resource.getUri());
-
         BigDecimal conversion = resource.request(MediaType.APPLICATION_JSON).get(BigDecimal.class);
         if (conversion == null) {
             worked = "error";

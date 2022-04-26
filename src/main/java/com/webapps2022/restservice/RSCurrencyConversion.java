@@ -33,7 +33,6 @@ public class RSCurrencyConversion {
     public Response getConversion(@PathParam("currency1") CurrencyEnum currency1, @PathParam("currency2") CurrencyEnum currency2, @PathParam("amount_of_currency") BigDecimal amountOfCurrency) {
         BigDecimal currencyMultiplier = CurrencyEnum.convertCurrency(currency1, currency2);
         BigDecimal convertedCurrency = amountOfCurrency.multiply(currencyMultiplier);
-        BigDecimal scaled = convertedCurrency.setScale(2, BigDecimal.ROUND_HALF_DOWN);
-        return Response.ok(scaled).build();
+        return Response.ok(convertedCurrency).build();
     }
 }
