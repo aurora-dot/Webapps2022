@@ -5,7 +5,7 @@
 package com.webapps2022.ejb;
 
 import static com.webapps2022.entity.CurrencyEnum.GBP;
-import java.math.BigDecimal;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
@@ -26,7 +26,7 @@ public class StartupService {
     @PostConstruct
     private void startup() {
         if (!usrSrv.userExists("admin1")) {
-            usrSrv.registerAdmin("admin1", "admin1", "admin1", "admin", "admin", BigDecimal.valueOf(100), GBP);
+            usrSrv.registerAdmin("admin1", "admin1", "admin1", "admin", "admin", Float.valueOf(100), GBP);
         }
     }
 

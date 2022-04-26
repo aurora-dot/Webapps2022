@@ -5,7 +5,7 @@
 package com.webapps2022.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -40,7 +40,7 @@ public class SystemUser implements Serializable {
     String surname;
 
     @NotNull
-    BigDecimal currencyCount;
+    Float currencyCount;
 
     @NotNull
     CurrencyEnum currencyType;
@@ -58,7 +58,7 @@ public class SystemUser implements Serializable {
     public SystemUser() {
     }
 
-    public SystemUser(String username, String password, String name, String surname, BigDecimal currencyCount,
+    public SystemUser(String username, String password, String name, String surname, Float currencyCount,
             CurrencyEnum currencyType, SystemUserGroup group) {
         this.username = username;
         this.password = password;
@@ -101,11 +101,11 @@ public class SystemUser implements Serializable {
         this.surname = surname;
     }
 
-    public BigDecimal getCurrencyCount() {
+    public Float getCurrencyCount() {
         return currencyCount;
     }
 
-    public void setCurrencyCount(BigDecimal currencyCount) {
+    public void setCurrencyCount(Float currencyCount) {
         this.currencyCount = currencyCount;
     }
 

@@ -6,7 +6,7 @@ package com.webapps2022.jsf;
 
 import com.webapps2022.ejb.UserService;
 import com.webapps2022.entity.CurrencyEnum;
-import java.math.BigDecimal;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -36,7 +36,7 @@ public class RegistrationBean {
     }
 
     public String registerUser() {
-        String result = userService.registerUser(username, password, confPassword, name, surname, BigDecimal.valueOf(100), currencyType);
+        String result = userService.registerUser(username, password, confPassword, name, surname, Float.valueOf(100), currencyType);
         if (result.equals("index")) {
             return result + "?faces-redirect=true";
         } else {
@@ -47,7 +47,7 @@ public class RegistrationBean {
     }
 
     public String registerAdmin() {
-        String result = userService.registerAdmin(username, password, confPassword, name, surname, BigDecimal.valueOf(100),
+        String result = userService.registerAdmin(username, password, confPassword, name, surname, Float.valueOf(100),
                 currencyType);
         if (result.equals("index")) {
             return result;

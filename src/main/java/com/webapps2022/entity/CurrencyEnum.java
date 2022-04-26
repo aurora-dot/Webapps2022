@@ -4,8 +4,6 @@
  */
 package com.webapps2022.entity;
 
-import java.math.BigDecimal;
-
 /**
  *
  * @author blankie
@@ -65,42 +63,42 @@ public enum CurrencyEnum {
         return null;
     }
 
-    public static BigDecimal convertCurrency(CurrencyEnum fromCurrency, CurrencyEnum toCurrency) {
+    public static Float convertCurrency(CurrencyEnum fromCurrency, CurrencyEnum toCurrency) {
         if (fromCurrency != null && toCurrency != null) {
             switch (fromCurrency) {
                 case GBP:
                     switch (toCurrency) {
                         case GBP:
-                            return BigDecimal.valueOf(1.0);
+                            return (float) 1.0;
 
                         case EUR:
-                            return BigDecimal.valueOf(1.19);
+                            return (float) 1.19;
 
                         case USD:
-                            return BigDecimal.valueOf(1.27);
+                            return (float) 1.27;
                     }
                 case EUR:
                     switch (toCurrency) {
                         case GBP:
-                            return BigDecimal.valueOf(0.84);
+                            return (float) 0.84;
 
                         case EUR:
-                            return BigDecimal.valueOf(1.0);
+                            return (float) 1.0;
 
                         case USD:
-                            return BigDecimal.valueOf(1.07);
+                            return (float) 1.07;
                     }
 
                 case USD:
                     switch (toCurrency) {
                         case GBP:
-                            return BigDecimal.valueOf(0.79);
+                            return (float) 0.79;
 
                         case EUR:
-                            return BigDecimal.valueOf(0.93);
+                            return (float) 0.93;
 
                         case USD:
-                            return BigDecimal.valueOf(1.0);
+                            return (float) 1.0;
                     }
             }
         }

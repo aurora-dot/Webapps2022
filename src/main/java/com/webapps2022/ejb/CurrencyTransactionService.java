@@ -8,7 +8,6 @@ import com.webapps2022.entity.CurrencyEnum;
 import com.webapps2022.entity.SystemUser;
 import com.webapps2022.entity.CurrencyTransaction;
 import com.webapps2022.thrift.TimestampService;
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
@@ -41,7 +40,7 @@ public class CurrencyTransactionService {
 
     @RolesAllowed({"users"})
     private synchronized CurrencyTransaction createTransaction(SystemUser toSystemUser, SystemUser fromSystemUser,
-            BigDecimal currencyCountTo, BigDecimal currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom,
+            Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom,
             Boolean finalised, Instant timeStamp) {
         return new CurrencyTransaction(toSystemUser, fromSystemUser, currencyCountTo,
                 currencyCountFrom, currencyTypeTo, currencyTypeFrom, timeStamp, finalised);
@@ -52,13 +51,13 @@ public class CurrencyTransactionService {
         SystemUser fromUser = pendingTransaction.getFromSystemUser();
         SystemUser toUser = pendingTransaction.getToSystemUser();
 
-        BigDecimal currencyCount = pendingTransaction.getCurrencyCountFrom();
-        if (fromUser.getCurrencyCount().compareTo(currencyCount) < 0) {
+        Float currencyCount = pendingTransaction.getCurrencyCountFrom();
+        if (fromUser.getCurrencyCount() < currencyCount) {
             return "Not enough money in balance.";
         }
 
-        toUser.setCurrencyCount(toUser.getCurrencyCount().add(pendingTransaction.getCurrencyCountTo()));
-        fromUser.setCurrencyCount(fromUser.getCurrencyCount().subtract(pendingTransaction.getCurrencyCountFrom()));
+        toUser.setCurrencyCount(toUser.getCurrencyCount() + pendingTransaction.getCurrencyCountTo());
+        fromUser.setCurrencyCount(fromUser.getCurrencyCount() - pendingTransaction.getCurrencyCountFrom());
         pendingTransaction.setCompleted(true);
 
         em.merge(pendingTransaction);
@@ -79,7 +78,7 @@ public class CurrencyTransactionService {
     }
 
     @RolesAllowed({"users"})
-    public synchronized String sendPayment(String toUsername, String fromUsername, BigDecimal currencyCount) {
+    public synchronized String sendPayment(String toUsername, String fromUsername, Float currencyCount) {
         SystemUser toUser = getUserByUsername(toUsername);
         SystemUser fromUser = getUserByUsername(fromUsername);
 
@@ -95,13 +94,13 @@ public class CurrencyTransactionService {
             return "Error: thrift server not running.";
         }
 
-        BigDecimal fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
+        Float fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
 
-        BigDecimal currencyCountTo = currencyCount.multiply(fromCurrency);
-        BigDecimal currencyCountFrom = currencyCount;
+        Float currencyCountTo = currencyCount * fromCurrency;
+        Float currencyCountFrom = currencyCount;
 
-        toUser.setCurrencyCount(toUser.getCurrencyCount().add(currencyCountTo));
-        fromUser.setCurrencyCount(fromUser.getCurrencyCount().subtract(currencyCountFrom));
+        toUser.setCurrencyCount(toUser.getCurrencyCount() + currencyCountTo);
+        fromUser.setCurrencyCount(fromUser.getCurrencyCount() - currencyCountFrom);
 
         em.persist(fromUser);
         em.persist(toUser);
@@ -113,7 +112,7 @@ public class CurrencyTransactionService {
     }
 
     @RolesAllowed({"users"})
-    public synchronized String requestPayment(String toUsername, String fromUsername, BigDecimal currencyCount) {
+    public synchronized String requestPayment(String toUsername, String fromUsername, Float currencyCount) {
         SystemUser toUser = getUserByUsername(toUsername);
         SystemUser fromUser = getUserByUsername(fromUsername);
 
@@ -126,9 +125,9 @@ public class CurrencyTransactionService {
             return "Error: thrift server not running.";
         }
 
-        BigDecimal fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
-        BigDecimal currencyCountTo = currencyCount.multiply(fromCurrency);
-        BigDecimal currencyCountFrom = currencyCount;
+        Float fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
+        Float currencyCountTo = currencyCount * fromCurrency;
+        Float currencyCountFrom = currencyCount;
 
         em.persist(createTransaction(toUser, fromUser, currencyCountTo, currencyCountFrom, toUser.getCurrencyType(),
                 fromUser.getCurrencyType(), false, timestamp));
