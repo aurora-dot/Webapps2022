@@ -58,7 +58,7 @@ public class CurrencyTransactionService {
         }
 
         toUser.setCurrencyCount(toUser.getCurrencyCount().add(pendingTransaction.getCurrencyCountTo()));
-        fromUser.setCurrencyCount(fromUser.getCurrencyCount().subtract(pendingTransaction.getCurrencyCountFrom()));
+        fromUser.setCurrencyCount(fromUser.getCurrencyCount().subtract(pendingTransaction.getCurrencyCountFrom()).setScale(2, BigDecimal.ROUND_HALF_DOWN));
         pendingTransaction.setCompleted(true);
 
         em.merge(pendingTransaction);
@@ -92,11 +92,11 @@ public class CurrencyTransactionService {
 
         BigDecimal fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
 
-        BigDecimal currencyCountTo = currencyCount.multiply(fromCurrency);
+        BigDecimal currencyCountTo = currencyCount.multiply(fromCurrency).setScale(2, BigDecimal.ROUND_HALF_DOWN);
         BigDecimal currencyCountFrom = currencyCount;
 
         toUser.setCurrencyCount(toUser.getCurrencyCount().add(currencyCountTo));
-        fromUser.setCurrencyCount(fromUser.getCurrencyCount().subtract(currencyCountFrom));
+        fromUser.setCurrencyCount(fromUser.getCurrencyCount().subtract(currencyCountFrom).setScale(2, BigDecimal.ROUND_HALF_DOWN));
 
         em.persist(fromUser);
         em.persist(toUser);
@@ -117,7 +117,7 @@ public class CurrencyTransactionService {
         }
 
         BigDecimal fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
-        BigDecimal currencyCountTo = currencyCount.multiply(fromCurrency);
+        BigDecimal currencyCountTo = currencyCount.multiply(fromCurrency).setScale(2, BigDecimal.ROUND_HALF_DOWN);
         BigDecimal currencyCountFrom = currencyCount;
 
         em.persist(createTransaction(toUser, fromUser, currencyCountTo, currencyCountFrom, toUser.getCurrencyType(),
