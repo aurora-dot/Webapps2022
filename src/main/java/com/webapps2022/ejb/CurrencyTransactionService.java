@@ -188,7 +188,7 @@ public class CurrencyTransactionService {
         }
     }
 
-    @RolesAllowed({"users", "admins"})
+    @RolesAllowed({"users"})
     public synchronized Instant getTimestamp() {
         try {
             TTransport transport;

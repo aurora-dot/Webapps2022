@@ -51,7 +51,6 @@ public class UserService {
                 "users");
     }
 
-    @RolesAllowed({"admins"})
     public String registerAdmin(String username, String password, String confPassword, String name, String surname,
             Float currencyCount,
             CurrencyEnum currencyType) {

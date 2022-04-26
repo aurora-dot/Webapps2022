@@ -9,9 +9,7 @@ import java.net.URISyntaxException;
 import javax.ejb.Singleton;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -19,6 +17,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author blankie
  */
+// Explination
 // When logging in using the login.xhtml file directly, it directs to the base context path
 // This is being overwritten by the REST application, to fix this I had to create a redirect
 // To the index page again, it renders that page typically if no REST application was there
