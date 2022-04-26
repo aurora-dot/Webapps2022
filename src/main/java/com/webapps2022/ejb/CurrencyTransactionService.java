@@ -98,10 +98,13 @@ public class CurrencyTransactionService {
         toUser.setCurrencyCount(toUser.getCurrencyCount().add(currencyCountTo));
         fromUser.setCurrencyCount(fromUser.getCurrencyCount().subtract(currencyCountFrom));
 
+        Instant timestamp = getTimestamp();
+        if (timestamp == null) return "Error: thrift server not running.";
+
         em.persist(fromUser);
         em.persist(toUser);
         em.persist(createTransaction(toUser, fromUser, currencyCountTo, currencyCountFrom, toUser.getCurrencyType(),
-                fromUser.getCurrencyType(), true, getTimestamp()));
+                fromUser.getCurrencyType(), true, timestamp));
         em.flush();
 
         return "Success!";
@@ -120,8 +123,11 @@ public class CurrencyTransactionService {
         BigDecimal currencyCountTo = currencyCount.multiply(fromCurrency);
         BigDecimal currencyCountFrom = currencyCount;
 
+        Instant timestamp = getTimestamp();
+        if (timestamp == null) return "Error: thrift server not running.";
+
         em.persist(createTransaction(toUser, fromUser, currencyCountTo, currencyCountFrom, toUser.getCurrencyType(),
-                fromUser.getCurrencyType(), false, getTimestamp()));
+                fromUser.getCurrencyType(), false, timestamp));
         em.flush();
 
         return "Sent request!";
