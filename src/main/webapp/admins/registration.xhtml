@@ -20,8 +20,9 @@
                 title="Enter username"
                 required="true"
                 requiredMessage="Mandatory Field"
-                size="128"
-                />
+                >
+                <f:validateLength maximum="128"/>
+            </h:inputText>
             &nbsp;
             <h:message style="color: red" for="username" />
             <br />
@@ -33,8 +34,8 @@
                 label="password"
                 required="true"
                 requiredMessage="Mandatory Field"
-                size="128"
                 >
+                <f:validateLength maximum="128"/>
             </h:inputSecret>
             &nbsp;
             <h:message style="color: red" for="password" />
@@ -48,9 +49,10 @@
                 required="true"
                 requiredMessage="Mandatory Field"
                 >
+                <f:validateLength maximum="128"/>
             </h:inputSecret>
             &nbsp;
-            <h:message style="color: red" for="password" />
+            <h:message style="color: red" for="confPassword" />
             <br />
             <h:outputLabel for="name" value="*First Name: " />
             <h:inputText
