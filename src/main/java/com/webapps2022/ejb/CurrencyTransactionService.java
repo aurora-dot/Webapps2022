@@ -90,6 +90,11 @@ public class CurrencyTransactionService {
             return "Not enough money in balance.";
         }
 
+        Instant timestamp = getTimestamp();
+        if (timestamp == null) {
+            return "Error: thrift server not running.";
+        }
+
         BigDecimal fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
 
         BigDecimal currencyCountTo = currencyCount.multiply(fromCurrency);
@@ -97,9 +102,6 @@ public class CurrencyTransactionService {
 
         toUser.setCurrencyCount(toUser.getCurrencyCount().add(currencyCountTo));
         fromUser.setCurrencyCount(fromUser.getCurrencyCount().subtract(currencyCountFrom));
-
-        Instant timestamp = getTimestamp();
-        if (timestamp == null) return "Error: thrift server not running.";
 
         em.persist(fromUser);
         em.persist(toUser);
@@ -119,12 +121,14 @@ public class CurrencyTransactionService {
             return "No such user.";
         }
 
+        Instant timestamp = getTimestamp();
+        if (timestamp == null) {
+            return "Error: thrift server not running.";
+        }
+
         BigDecimal fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
         BigDecimal currencyCountTo = currencyCount.multiply(fromCurrency);
         BigDecimal currencyCountFrom = currencyCount;
-
-        Instant timestamp = getTimestamp();
-        if (timestamp == null) return "Error: thrift server not running.";
 
         em.persist(createTransaction(toUser, fromUser, currencyCountTo, currencyCountFrom, toUser.getCurrencyType(),
                 fromUser.getCurrencyType(), false, timestamp));
