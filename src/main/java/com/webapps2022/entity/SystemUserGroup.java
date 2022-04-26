@@ -15,7 +15,6 @@ import javax.persistence.Id;
  *
  * @author blankie
  */
-
 @Entity
 public class SystemUserGroup implements Serializable {
 

@@ -15,10 +15,10 @@ import javax.ejb.Startup;
  *
  * @author blankie
  */
-
 @Startup
 @Singleton
 public class StartupService {
+
     @EJB
     UserService usrSrv;
 

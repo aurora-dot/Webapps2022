@@ -11,8 +11,9 @@ import org.apache.thrift.TException;
  * @author blankie
  */
 public class TimestamperHandler implements TimestampService.Iface {
+
     @Override
     public long getTimestamp() throws TException {
         return System.currentTimeMillis();
-    }   
+    }
 }

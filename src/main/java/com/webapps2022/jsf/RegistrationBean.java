@@ -16,7 +16,6 @@ import javax.inject.Named;
  *
  * @author blankie
  */
-
 @Named
 @RequestScoped
 public class RegistrationBean {

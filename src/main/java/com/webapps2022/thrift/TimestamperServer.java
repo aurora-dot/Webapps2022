@@ -14,6 +14,7 @@ import org.apache.thrift.transport.TServerTransport;
  * @author blankie
  */
 public class TimestamperServer {
+
     public static TimestamperHandler handler;
     public static TimestampService.Processor processor;
     public static TServerTransport serverTransport;
@@ -34,7 +35,7 @@ public class TimestamperServer {
             new Thread(simple).start();
             System.in.read();
             server.stop();
-            
+
         } catch (Exception x) {
             System.err.println(x);
         }

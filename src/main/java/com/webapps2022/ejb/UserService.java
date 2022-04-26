@@ -51,7 +51,7 @@ public class UserService {
                 "users");
     }
 
-    @RolesAllowed({ "admins" })
+    @RolesAllowed({"admins"})
     public String registerAdmin(String username, String password, String confPassword, String name, String surname,
             Float currencyCount,
             CurrencyEnum currencyType) {
@@ -80,7 +80,7 @@ public class UserService {
             if (!userExists(username)) {
                 sys_user_group = new SystemUserGroup(username, group);
                 sys_user = new SystemUser(username, paswdToStoreInDB, name, surname, currencyCount, currencyType, sys_user_group);
-                em.persist(sys_user_group);   
+                em.persist(sys_user_group);
                 em.persist(sys_user);
                 em.flush();
 

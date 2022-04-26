@@ -19,10 +19,10 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author blankie
  */
-
 @Singleton
 @Path("/conversion")
 public class RSCurrencyConversion {
+
     @Context
     UriInfo uriInfo;
 

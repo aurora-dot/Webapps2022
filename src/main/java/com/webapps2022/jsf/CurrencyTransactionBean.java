@@ -22,6 +22,7 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class CurrencyTransactionBean {
+
     @EJB
     CurrencyTransactionService transactionService;
 
@@ -84,8 +85,11 @@ public class CurrencyTransactionBean {
 
     public void currencyCommon(String returned) {
         FacesMessage.Severity faceMessageType;
-        if (!returned.contains("!")) faceMessageType = FacesMessage.SEVERITY_ERROR;
-        else faceMessageType = FacesMessage.SEVERITY_INFO;
+        if (!returned.contains("!")) {
+            faceMessageType = FacesMessage.SEVERITY_ERROR;
+        } else {
+            faceMessageType = FacesMessage.SEVERITY_INFO;
+        }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(faceMessageType, returned, ""));
     }
 

@@ -21,24 +21,23 @@ import javax.validation.constraints.NotNull;
  *
  * @author blankie
  */
-
 @NamedQueries({
     @NamedQuery(name = "getAllTransactions", query = "SELECT t FROM CurrencyTransaction t"),
     @NamedQuery(name = "getUserCompletedTransactions", query = "SELECT t FROM CurrencyTransaction t WHERE (t.fromSystemUser = :systemUser OR t.toSystemUser = :systemUser) AND t.completed = true"),
-    @NamedQuery(name = "getUserRequestsSending", query = "SELECT t FROM CurrencyTransaction t WHERE t.fromSystemUser = :systemUser AND t.completed = false"),    
-})
+    @NamedQuery(name = "getUserRequestsSending", query = "SELECT t FROM CurrencyTransaction t WHERE t.fromSystemUser = :systemUser AND t.completed = false"),})
 
 @Entity
 public class CurrencyTransaction implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     SystemUser toSystemUser;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     SystemUser fromSystemUser;
 
@@ -59,7 +58,6 @@ public class CurrencyTransaction implements Serializable {
 
     @NotNull
     boolean completed;
-
 
     public CurrencyTransaction() {
     }

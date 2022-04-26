@@ -12,39 +12,39 @@
         <h:form>
             <h:outputLabel for="username" value="*Username to send: " />
             <h:inputText
-              id="username"
-              value="#{currencyTransactionBean.otherUsername}"
-              title="Enter user name"
-              required="true"
-              requiredMessage="Mandatory Field"
-            />
+                id="username"
+                value="#{currencyTransactionBean.otherUsername}"
+                title="Enter user name"
+                required="true"
+                requiredMessage="Mandatory Field"
+                />
             <h:message style="color: red" for="username" />
             <br />
             <h:outputLabel for="currencyCount" value="*Currency amount to send ${currencyTransactionBean.getUserCurrencySymbol(request.remoteUser)}" />
             <h:inputText
-              id="currencyCount"
-              value="#{currencyTransactionBean.currencyCount}"
-              title="Enter currency amount"
-              required="true"
-              requiredMessage="Mandatory Field"
-              >
+                id="currencyCount"
+                value="#{currencyTransactionBean.currencyCount}"
+                title="Enter currency amount"
+                required="true"
+                requiredMessage="Mandatory Field"
+                >
                 <f:converter converterId="javax.faces.Float" />
             </h:inputText>
             <h:message style="color: red" for="currencyCount" />
             <br />
             <h:commandButton
-              id="request"
-              type="submit"
-              value="Send"
-              action="#{currencyTransactionBean.sendPayment(request.remoteUser)}"
-              title="Send request"
-            />
+                id="request"
+                type="submit"
+                value="Send"
+                action="#{currencyTransactionBean.sendPayment(request.remoteUser)}"
+                title="Send request"
+                />
             <h:commandButton
-              id="reset"
-              type="reset"
-              value="Reset Form"
-              title="Reset Form"
-            />
+                id="reset"
+                type="reset"
+                value="Reset Form"
+                title="Reset Form"
+                />
         </h:form>
         <h:link value="Back to index" outcome="index" />
     </h:body>

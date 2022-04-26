@@ -19,14 +19,13 @@ import javax.validation.constraints.NotNull;
  *
  * @author blankie
  */
-
 @NamedQueries({
     @NamedQuery(name = "getAllUsers", query = "SELECT u FROM SystemUser u"),
-    @NamedQuery(name = "getUserByUsername", query = "SELECT u FROM SystemUser u WHERE u.username = :username"),
-})
+    @NamedQuery(name = "getUserByUsername", query = "SELECT u FROM SystemUser u WHERE u.username = :username"),})
 
 @Entity
 public class SystemUser implements Serializable {
+
     @Id
     String username;
 
@@ -47,14 +46,13 @@ public class SystemUser implements Serializable {
 
     @OneToOne
     @NotNull
-    private SystemUserGroup group;  
+    private SystemUserGroup group;
 
     @OneToMany(mappedBy = "fromSystemUser")
     List<CurrencyTransaction> outTransactions;
 
     @OneToMany(mappedBy = "toSystemUser")
     List<CurrencyTransaction> inTransactions;
-
 
     public SystemUser() {
     }

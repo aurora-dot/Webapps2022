@@ -12,7 +12,6 @@ import javax.inject.Named;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 /**
  *
  * @author blankie
@@ -33,8 +32,11 @@ public class RestBean {
 
     public void retrieveConversion() {
         String result = restService.retrieveConversion(currency1, currency2, amountOfCurrency);
-        if (result.equals("error")) FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result, ""));
-        else FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, CurrencyEnum.getCurrencySymbol(currency2) + result, ""));
+        if (result.equals("error")) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, result, ""));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, CurrencyEnum.getCurrencySymbol(currency2) + result, ""));
+        }
     }
 
     public CurrencyEnum[] getAllOrderCurrencies() {
@@ -73,8 +75,4 @@ public class RestBean {
         this.amountOfCurrency = amountOfCurrency;
     }
 
-
 }
-
-
-

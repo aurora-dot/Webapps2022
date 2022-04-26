@@ -21,27 +21,32 @@ import javax.ws.rs.core.MediaType;
  *
  * @author blankie
  */
-
 @Stateless
 public class RestService {
+
     private final Client client;
-    
 
     public RestService() throws KeyManagementException, NoSuchAlgorithmException {
         // Source: https://stackoverflow.com/questions/6047996/ignore-self-signed-ssl-cert-using-jersey-client
         SSLContext sslcontext = SSLContext.getInstance("TLS");
-        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager(){
-            public X509Certificate[] getAcceptedIssuers(){return null;}
-            public void checkClientTrusted(X509Certificate[] certs, String authType){}
-            public void checkServerTrusted(X509Certificate[] certs, String authType){}
+        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+            public X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+
+            public void checkClientTrusted(X509Certificate[] certs, String authType) {
+            }
+
+            public void checkServerTrusted(X509Certificate[] certs, String authType) {
+            }
         }};
 
         sslcontext.init(null, trustAllCerts, new java.security.SecureRandom());
 
         client = ClientBuilder.newBuilder()
-                            .sslContext(sslcontext)
-                            .hostnameVerifier((s1, s2) -> true)
-                            .build();
+                .sslContext(sslcontext)
+                .hostnameVerifier((s1, s2) -> true)
+                .build();
     }
 
     public synchronized String retrieveConversion(CurrencyEnum currency1, CurrencyEnum currency2, Float amountOfCurrency) {
