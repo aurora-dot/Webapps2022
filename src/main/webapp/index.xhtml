@@ -33,6 +33,8 @@
       </div>
     </c:if>
 
+    <h:link value="View currency conversion" outcome="conversion" />
+    
     <c:if test="#{!(loginBean.visitorAdmin || loginBean.visitorUser)}">
         <div>
           <h:link
@@ -49,7 +51,6 @@
         </div>
     </c:if>
 
-    <h:link value="View currency conversion" outcome="conversion" />
     
     <c:if test="#{loginBean.visitorAdmin || loginBean.visitorUser}">
       <br />
