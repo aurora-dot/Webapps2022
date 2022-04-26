@@ -2,6 +2,7 @@ package com.webapps2022.jsf;
 
 import com.webapps2022.ejb.RestService;
 import com.webapps2022.entity.CurrencyEnum;
+import java.math.BigDecimal;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -25,7 +26,7 @@ public class RestBean {
 
     CurrencyEnum currency1;
     CurrencyEnum currency2;
-    Float amountOfCurrency;
+    BigDecimal amountOfCurrency;
 
     public RestBean() {
     }
@@ -67,11 +68,11 @@ public class RestBean {
         this.currency2 = currency2;
     }
 
-    public Float getAmountOfCurrency() {
+    public BigDecimal getAmountOfCurrency() {
         return amountOfCurrency;
     }
 
-    public void setAmountOfCurrency(Float amountOfCurrency) {
+    public void setAmountOfCurrency(BigDecimal amountOfCurrency) {
         this.amountOfCurrency = amountOfCurrency;
     }
 

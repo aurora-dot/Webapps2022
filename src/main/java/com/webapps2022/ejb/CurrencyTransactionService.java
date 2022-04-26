@@ -8,6 +8,7 @@ import com.webapps2022.entity.CurrencyEnum;
 import com.webapps2022.entity.SystemUser;
 import com.webapps2022.entity.CurrencyTransaction;
 import com.webapps2022.thrift.TimestampService;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
@@ -40,7 +41,7 @@ public class CurrencyTransactionService {
 
     @RolesAllowed({"users"})
     private synchronized CurrencyTransaction createTransaction(SystemUser toSystemUser, SystemUser fromSystemUser,
-            Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom,
+            BigDecimal currencyCountTo, BigDecimal currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom,
             Boolean finalised, Instant timeStamp) {
         return new CurrencyTransaction(toSystemUser, fromSystemUser, currencyCountTo,
                 currencyCountFrom, currencyTypeTo, currencyTypeFrom, timeStamp, finalised);
@@ -51,13 +52,13 @@ public class CurrencyTransactionService {
         SystemUser fromUser = pendingTransaction.getFromSystemUser();
         SystemUser toUser = pendingTransaction.getToSystemUser();
 
-        float currencyCount = pendingTransaction.getCurrencyCountFrom();
-        if (fromUser.getCurrencyCount() < currencyCount) {
+        BigDecimal currencyCount = pendingTransaction.getCurrencyCountFrom();
+        if (fromUser.getCurrencyCount().compareTo(currencyCount) < 0) {
             return "Not enough money in balance.";
         }
 
-        toUser.setCurrencyCount(toUser.getCurrencyCount() + pendingTransaction.getCurrencyCountTo());
-        fromUser.setCurrencyCount(fromUser.getCurrencyCount() - pendingTransaction.getCurrencyCountFrom());
+        toUser.setCurrencyCount(toUser.getCurrencyCount().add(pendingTransaction.getCurrencyCountTo()));
+        fromUser.setCurrencyCount(fromUser.getCurrencyCount().subtract(pendingTransaction.getCurrencyCountFrom()));
         pendingTransaction.setCompleted(true);
 
         em.merge(pendingTransaction);
@@ -78,24 +79,24 @@ public class CurrencyTransactionService {
     }
 
     @RolesAllowed({"users"})
-    public synchronized String sendPayment(String toUsername, String fromUsername, float currencyCount) {
+    public synchronized String sendPayment(String toUsername, String fromUsername, BigDecimal currencyCount) {
         SystemUser toUser = getUserByUsername(toUsername);
         SystemUser fromUser = getUserByUsername(fromUsername);
 
         if (toUser == null || fromUser == null) {
             return "No such user.";
         }
-        if (fromUser.getCurrencyCount() < currencyCount) {
+        if (fromUser.getCurrencyCount().compareTo(currencyCount) < 0) {
             return "Not enough money in balance.";
         }
 
-        float fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
+        BigDecimal fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
 
-        float currencyCountTo = currencyCount * fromCurrency;
-        float currencyCountFrom = currencyCount;
+        BigDecimal currencyCountTo = currencyCount.multiply(fromCurrency);
+        BigDecimal currencyCountFrom = currencyCount;
 
-        toUser.setCurrencyCount(toUser.getCurrencyCount() + currencyCountTo);
-        fromUser.setCurrencyCount(fromUser.getCurrencyCount() - currencyCountFrom);
+        toUser.setCurrencyCount(toUser.getCurrencyCount().add(currencyCountTo));
+        fromUser.setCurrencyCount(fromUser.getCurrencyCount().subtract(currencyCountFrom));
 
         em.persist(fromUser);
         em.persist(toUser);
@@ -107,7 +108,7 @@ public class CurrencyTransactionService {
     }
 
     @RolesAllowed({"users"})
-    public synchronized String requestPayment(String toUsername, String fromUsername, float currencyCount) {
+    public synchronized String requestPayment(String toUsername, String fromUsername, BigDecimal currencyCount) {
         SystemUser toUser = getUserByUsername(toUsername);
         SystemUser fromUser = getUserByUsername(fromUsername);
 
@@ -115,9 +116,9 @@ public class CurrencyTransactionService {
             return "No such user.";
         }
 
-        float fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
-        float currencyCountTo = currencyCount * fromCurrency;
-        float currencyCountFrom = currencyCount;
+        BigDecimal fromCurrency = CurrencyEnum.convertCurrency(fromUser.getCurrencyType(), toUser.getCurrencyType());
+        BigDecimal currencyCountTo = currencyCount.multiply(fromCurrency);
+        BigDecimal currencyCountFrom = currencyCount;
 
         em.persist(createTransaction(toUser, fromUser, currencyCountTo, currencyCountFrom, toUser.getCurrencyType(),
                 fromUser.getCurrencyType(), false, getTimestamp()));

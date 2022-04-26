@@ -5,6 +5,7 @@
 package com.webapps2022.ejb;
 
 import com.webapps2022.entity.CurrencyEnum;
+import java.math.BigDecimal;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
@@ -49,7 +50,7 @@ public class RestService {
                 .build();
     }
 
-    public synchronized String retrieveConversion(CurrencyEnum currency1, CurrencyEnum currency2, Float amountOfCurrency) {
+    public synchronized String retrieveConversion(CurrencyEnum currency1, CurrencyEnum currency2, BigDecimal amountOfCurrency) {
         String worked;
         WebTarget resource = client.target("https://localhost:8181/webapps2022")
                 .path("conversion")
@@ -59,7 +60,7 @@ public class RestService {
 
         System.out.println(resource.getUri());
 
-        Float conversion = resource.request(MediaType.APPLICATION_JSON).get(Float.class);
+        BigDecimal conversion = resource.request(MediaType.APPLICATION_JSON).get(BigDecimal.class);
         if (conversion == null) {
             worked = "error";
         } else {

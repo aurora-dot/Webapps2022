@@ -4,6 +4,8 @@
  */
 package com.webapps2022.entity;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author blankie
@@ -63,42 +65,42 @@ public enum CurrencyEnum {
         return null;
     }
 
-    public static Float convertCurrency(CurrencyEnum fromCurrency, CurrencyEnum toCurrency) {
+    public static BigDecimal convertCurrency(CurrencyEnum fromCurrency, CurrencyEnum toCurrency) {
         if (fromCurrency != null && toCurrency != null) {
             switch (fromCurrency) {
                 case GBP:
                     switch (toCurrency) {
                         case GBP:
-                            return (float) 1.0;
+                            return BigDecimal.valueOf(1.0);
 
                         case EUR:
-                            return (float) 1.19;
+                            return BigDecimal.valueOf(1.19);
 
                         case USD:
-                            return (float) 1.27;
+                            return BigDecimal.valueOf(1.27);
                     }
                 case EUR:
                     switch (toCurrency) {
                         case GBP:
-                            return (float) 0.84;
+                            return BigDecimal.valueOf(0.84);
 
                         case EUR:
-                            return (float) 1.0;
+                            return BigDecimal.valueOf(1.0);
 
                         case USD:
-                            return (float) 1.07;
+                            return BigDecimal.valueOf(1.07);
                     }
 
                 case USD:
                     switch (toCurrency) {
                         case GBP:
-                            return (float) 0.93;
+                            return BigDecimal.valueOf(0.93);
 
                         case EUR:
-                            return (float) 0.93;
+                            return BigDecimal.valueOf(0.93);
 
                         case USD:
-                            return (float) 1.0;
+                            return BigDecimal.valueOf(1.0);
                     }
             }
         }

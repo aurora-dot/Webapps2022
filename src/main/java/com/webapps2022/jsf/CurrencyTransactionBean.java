@@ -8,6 +8,7 @@ import com.webapps2022.ejb.CurrencyTransactionService;
 import com.webapps2022.entity.CurrencyEnum;
 import com.webapps2022.entity.CurrencyTransaction;
 import com.webapps2022.entity.SystemUser;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -27,7 +28,7 @@ public class CurrencyTransactionBean {
     CurrencyTransactionService transactionService;
 
     private String otherUsername;
-    private Float currencyCount;
+    private BigDecimal currencyCount;
 
     public CurrencyTransactionService getTransactionService() {
         return transactionService;
@@ -45,11 +46,11 @@ public class CurrencyTransactionBean {
         this.otherUsername = otherUsername;
     }
 
-    public Float getCurrencyCount() {
+    public BigDecimal getCurrencyCount() {
         return currencyCount;
     }
 
-    public void setCurrencyCount(Float currencyCount) {
+    public void setCurrencyCount(BigDecimal currencyCount) {
         this.currencyCount = currencyCount;
     }
 

@@ -14,6 +14,7 @@ import com.webapps2022.entity.CurrencyEnum;
 import com.webapps2022.entity.SystemUserGroup;
 import com.webapps2022.entity.SystemUser;
 import java.lang.reflect.UndeclaredThrowableException;
+import java.math.BigDecimal;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.DependsOn;
 import javax.persistence.PersistenceException;
@@ -45,21 +46,21 @@ public class UserService {
     }
 
     public String registerUser(String username, String password, String confPassword, String name, String surname,
-            Float currencyCount,
+            BigDecimal currencyCount,
             CurrencyEnum currencyType) {
         return registerSystemUser(username, password, confPassword, name, surname, currencyCount, currencyType,
                 "users");
     }
 
     public String registerAdmin(String username, String password, String confPassword, String name, String surname,
-            Float currencyCount,
+            BigDecimal currencyCount,
             CurrencyEnum currencyType) {
         return registerSystemUser(username, password, confPassword, name, surname, currencyCount, currencyType,
                 "admins");
     }
 
     private String registerSystemUser(String username, String password, String confPassword, String name, String surname,
-            Float currencyCount,
+            BigDecimal currencyCount,
             CurrencyEnum currencyType, String group) {
         try {
             SystemUser sys_user;

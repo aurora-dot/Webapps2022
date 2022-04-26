@@ -5,6 +5,7 @@
 package com.webapps2022.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -42,10 +43,10 @@ public class CurrencyTransaction implements Serializable {
     SystemUser fromSystemUser;
 
     @NotNull
-    Float currencyCountTo;
+    BigDecimal currencyCountTo;
 
     @NotNull
-    Float currencyCountFrom;
+    BigDecimal currencyCountFrom;
 
     @NotNull
     CurrencyEnum currencyTypeTo;
@@ -62,7 +63,7 @@ public class CurrencyTransaction implements Serializable {
     public CurrencyTransaction() {
     }
 
-    public CurrencyTransaction(SystemUser toSystemUser, SystemUser fromSystemUser, Float currencyCountTo, Float currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom, Instant timeStamp, boolean completed) {
+    public CurrencyTransaction(SystemUser toSystemUser, SystemUser fromSystemUser, BigDecimal currencyCountTo, BigDecimal currencyCountFrom, CurrencyEnum currencyTypeTo, CurrencyEnum currencyTypeFrom, Instant timeStamp, boolean completed) {
         this.toSystemUser = toSystemUser;
         this.fromSystemUser = fromSystemUser;
         this.currencyCountTo = currencyCountTo;
@@ -97,19 +98,19 @@ public class CurrencyTransaction implements Serializable {
         this.fromSystemUser = fromSystemUser;
     }
 
-    public Float getCurrencyCountTo() {
+    public BigDecimal getCurrencyCountTo() {
         return currencyCountTo;
     }
 
-    public void setCurrencyCountTo(Float currencyCountTo) {
+    public void setCurrencyCountTo(BigDecimal currencyCountTo) {
         this.currencyCountTo = currencyCountTo;
     }
 
-    public Float getCurrencyCountFrom() {
+    public BigDecimal getCurrencyCountFrom() {
         return currencyCountFrom;
     }
 
-    public void setCurrencyCountFrom(Float currencyCountFrom) {
+    public void setCurrencyCountFrom(BigDecimal currencyCountFrom) {
         this.currencyCountFrom = currencyCountFrom;
     }
 
