@@ -1,4 +1,5 @@
 
 .dccache
-target/
+target/*
 .DS_Store
+!target/Webapps2022-1.0.war
